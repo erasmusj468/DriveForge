@@ -14,10 +14,18 @@ let wheelOriginals=[];
 let activeTab='vehicle';
 let cameraMode='hero';
 const state={
- mode:'customize',vehicle:'coupe',paint:'crimson',wheel:'split5',body:'sport',interior:'black',engine:'v6',drivetrain:'rwd',transmission:'dct',brakes:'bigsteel',aero:'active',ride:0,track:0,width:0,length:0,front:0,rear:0,lights:true,exhaust:true,pro:false,name:'Aster GT'
+ mode:'customize',vehicle:'bmw-m3-xdrive',paint:'crimson',wheel:'split5',body:'sport',interior:'black',engine:'v6',drivetrain:'rwd',transmission:'dct',brakes:'bigsteel',aero:'active',ride:0,track:0,width:0,length:0,front:0,rear:0,lights:true,exhaust:true,pro:false,name:'BMW M3 Competition xDrive'
 };
 
 const inlineCatalog=(()=>{try{return JSON.parse($('#dfCatalog')?.textContent||'null')}catch{return null}})();
+function activeProfile(){
+  if(!catalog) return null;
+  const real=catalog.referenceModels?.find(x=>x.id===state.vehicle);
+  if(real){const base=catalog.vehicles.find(x=>x.id===real.base);return base?{...real,url:base.url,visualBaseId:base.id}:real}
+  return catalog.vehicles.find(x=>x.id===state.vehicle)||catalog.referenceModels?.[0]||null;
+}
+function activeVisualBase(profile=activeProfile()){return profile?.visualBaseId||profile?.id||'coupe'}
+
 if(inlineCatalog){catalog=inlineCatalog;boot()}else{fetch('data.json').then(r=>{if(!r.ok)throw new Error('catalog fetch failed');return r.json()}).then(d=>{catalog=d;boot()}).catch(()=>{catalog=window.DF_CATALOG;if(catalog){boot()}else{$('#loadStatus').textContent='Catalog failed to load.'}})}
 
 function boot(){
@@ -30,7 +38,9 @@ function boot(){
 }
 
 function schedulePrefetch(id){
-  const run=()=>{loadModel(catalog.vehicles.find(v=>v.id===id), false).catch(()=>{})};
+  const profile=catalog.referenceModels?.find(v=>v.id===id)||catalog.vehicles.find(v=>v.id===id);
+  const base=profile?.base?catalog.vehicles.find(v=>v.id===profile.base):profile;
+  const run=()=>{loadModel(base, false).catch(()=>{})};
   if('requestIdleCallback' in window) requestIdleCallback(run,{timeout:1200}); else setTimeout(run,350);
 }
 
@@ -51,8 +61,8 @@ function setupLanding(){
     state.mode=btn.dataset.mode;
     $('#startScreen').classList.add('hidden');
     $('#studio').classList.remove('hidden');
-    state.vehicle=state.mode==='scratch'?'supercar':'coupe';
-    state.name=state.mode==='scratch'?'Forge Custom':'Aster GT';
+    state.vehicle=state.mode==='scratch'?'lamborghini-revuelto':'bmw-m3-xdrive';
+    state.name=state.mode==='scratch'?'Forge Custom':activeProfile()?.name||'BMW M3 Competition xDrive';
     renderConfig();loadVehicle();updateAll();
   }));
 }
@@ -99,7 +109,7 @@ function setupGlobalUI(){
   document.querySelectorAll('[data-camera]').forEach(b=>b.addEventListener('click',()=>setCamera(b.dataset.camera)));
   $('#tabs').addEventListener('click',(e)=>{const b=e.target.closest('button[data-tab]');if(!b)return;activeTab=b.dataset.tab;document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('active',x===b));renderConfig()});
 }
-function switchMode(mode){state.mode=mode;state.name=mode==='scratch'?'Forge Custom':catalog.vehicles.find(v=>v.id===state.vehicle)?.name||'Aster GT';renderConfig();updateAll();toast(mode==='scratch'?'Scratch architecture enabled':'Production model mode enabled')}
+function switchMode(mode){state.mode=mode;state.name=mode==='scratch'?'Forge Custom':activeProfile()?.name||'BMW M3 Competition xDrive';renderConfig();updateAll();toast(mode==='scratch'?'Scratch architecture enabled':'Production model mode enabled')}
 
 function optionButton(item,current,onClick,sub='',pro=false){
   const locked=pro&&!state.pro; return `<button class="choice ${item.id===current?'active':''}" data-opt="${item.id}" ${locked?'data-locked="1"':''}><strong>${item.name}</strong><small>${sub||item.desc||('+'+(item.price||0).toLocaleString()+' USD')}</small>${locked?'<span class="pill pro">PRO</span>':((item.price||0)>0?`<span class="pill">+$${Math.round(item.price).toLocaleString()}</span>`:'')}</button>`
@@ -108,7 +118,7 @@ function bindChoices(container,items,key,onSelect){container.querySelectorAll('.
 function premiumCard(){return `<div class="premium-card"><div class="eyebrow small">PREMIUM</div><h4>Pro Garage · $20</h4><p>Unlock V10/V12/hybrid power, forged wheels, carbon interior, race aero and exclusive widebody programs.</p><div class="premium-row"><strong>$20</strong><button class="solid-btn" id="premiumBtn">UNLOCK</button></div></div>`}
 
 function renderConfig(){
-  const el=$('#config'); const v=catalog.vehicles.find(x=>x.id===state.vehicle); if(!v)return;
+  const el=$('#config'); const v=activeProfile(); if(!v)return;
   $('#buildName').textContent=state.name;$('#viewerName').textContent=state.name;$('#viewerTag').textContent=v.tag;
   let html='';
   if(activeTab==='vehicle') html=renderVehicleTab(v);
@@ -123,19 +133,27 @@ function renderConfig(){
 }
 function title(t,s){return `<div class="config-title"><h3>${t}</h3><span>${s||''}</span></div>`}
 function renderVehicleTab(v){
-  const bodyCategories=[['sedan','Sedan'],['coupe','Coupe'],['hatch','Hatchback'],['estate','Wagon'],['crossover','SUV'],['suv','3-row SUV'],['roadster','Roadster'],['supercar','Supercar']];
-  let h=title(state.mode==='scratch'?'Architecture':'Vehicle','Production-style 3D models')+'<div class="choice-grid">';
-  for(const [id,label] of bodyCategories){const x=catalog.vehicles.find(k=>k.id===id);h+=optionButton({id,name:label,desc:x.tag,price:x.basePrice},state.vehicle,()=>{} ,x.tag)}
+  const models=catalog.referenceModels||[];
+  const brands=[...new Set(models.map(x=>x.brand))];
+  let h=title(state.mode==='scratch'?'Architecture':'Real-world garage',state.mode==='scratch'?'Shape the base silhouette':'Choose a real production model profile');
+  h+=`<div class="garage-head"><div><strong>${models.length} models</strong><span>BMW · Dodge · Ford · Toyota · Porsche · Chevrolet · Nissan · Mercedes-AMG · Audi · Lexus · McLaren · Aston Martin · Lamborghini · Ferrari · Honda · Subaru</span></div><label class="garage-search"><span>⌕</span><input id="modelSearch" placeholder="Search model or brand" autocomplete="off"></label></div>`;
+  h+='<div class="brand-filter" id="brandFilter"><button class="brand-pill active" data-brand="all">ALL</button>'+brands.map(b=>`<button class="brand-pill" data-brand="${escapeHtml(b)}">${escapeHtml(b)}</button>`).join('')+'</div>';
+  h+='<div class="real-model-grid" id="realModelGrid">';
+  for(const m of models){
+    const sel=m.id===state.vehicle?' selected':'';
+    h+=`<button class="real-model-card${sel}" data-real-model="${m.id}" data-brand="${escapeHtml(m.brand)}" data-search="${escapeHtml((m.brand+' '+m.name+' '+m.category).toLowerCase())}"><span class="model-brand">${escapeHtml(m.brand)}</span><strong>${escapeHtml(m.name)}</strong><span class="model-meta">${escapeHtml(m.year)} · ${escapeHtml(m.category)}</span><span class="model-stats"><b>${m.hp} HP</b><b>${m.zero.toFixed(1)} s 0–100</b></span></button>`;
+  }
   h+='</div>';
   if(state.mode==='scratch'){
-    h+=title('Proportions','Change the silhouette while retaining realistic vehicle geometry');
+    h+=title('Custom proportions','Change the silhouette while retaining the selected 3D base');
     h+=slider('length','Overall length',state.length,-8,8,'%');
     h+=slider('width','Overall width',state.width,-7,9,'%');
     h+=slider('front','Front overhang',state.front,-5,5,'%');
     h+=slider('rear','Rear overhang',state.rear,-5,5,'%');
   }
-  h+=title('Design identity','Original names keep the design manufacturer-neutral');
-  h+=`<div class="row"><label>Vehicle name</label><input id="nameInput" value="${escapeHtml(state.name)}" maxlength="28" style="width:65%;padding:8px;border-radius:7px;border:1px solid #2a313a;background:#0d1014;color:#fff"></div>`;
+  h+=title('Build identity','Name this configuration');
+  h+=`<div class="row"><label>Vehicle name</label><input id="nameInput" value="${escapeHtml(state.name)}" maxlength="34" style="width:65%;padding:8px;border-radius:7px;border:1px solid #2a313a;background:#0d1014;color:#fff"></div>`;
+  h+=`<div class="reference-note"><strong>Real-world reference profile</strong><span>${escapeHtml(catalog.realCarDisclaimer||'')}</span></div>`;
   return h;
 }
 function slider(id,label,val,min,max,suffix){return `<div class="row"><label>${label}</label><span class="value" id="${id}Val">${val>0?'+':''}${val}${suffix}</span></div><input class="range" id="${id}Range" type="range" min="${min}" max="${max}" value="${val}">`}
@@ -157,6 +175,21 @@ function toggle(id,label,on,sub){return `<div class="toggle-row"><div><strong>${
 
 function bindDynamic(){
   const area=$('#config');
+  area.querySelectorAll('[data-real-model]').forEach(card=>card.onclick=()=>{
+    const id=card.dataset.realModel; const model=catalog.referenceModels?.find(x=>x.id===id); if(!model)return;
+    state.vehicle=id; state.name=model.brand+' '+model.name; renderConfig(); loadVehicle(); updateAll(); toast(`${model.brand} ${model.name} selected`);
+  });
+  const search=$('#modelSearch');
+  const grid=$('#realModelGrid');
+  const pills=[...document.querySelectorAll('.brand-pill')];
+  let activeBrand='all';
+  const filterModels=()=>{
+    const q=(search?.value||'').trim().toLowerCase();
+    grid?.querySelectorAll('[data-real-model]').forEach(card=>{const okBrand=activeBrand==='all'||card.dataset.brand===activeBrand;const okText=!q||card.dataset.search.includes(q);card.hidden=!(okBrand&&okText)});
+  };
+  search?.addEventListener('input',filterModels);
+  pills.forEach(pill=>pill.addEventListener('click',()=>{activeBrand=pill.dataset.brand;pills.forEach(x=>x.classList.toggle('active',x===pill));filterModels()}));
+
   area.querySelectorAll('.swatch[data-paint]').forEach(b=>b.onclick=()=>{state.paint=b.dataset.paint;applyAllMaterials();renderConfig();toast('Paint updated')});
   area.querySelectorAll('.choice').forEach(b=>b.onclick=()=>handleChoice(b));
   const sliders=['length','width','front','rear','ride','track'];for(const id of sliders){const r=$(`#${id}Range`);if(r)r.oninput=()=>{state[id]=+r.value;const val=$(`#${id}Val`);if(val)val.textContent=(state[id]>0?'+':'')+state[id]+(id==='ride'||id==='track'?' mm':'%');applyVehicleTransforms();updateAll()}}
@@ -166,7 +199,7 @@ function bindDynamic(){
   $('#premiumBtn')?.addEventListener('click',openPremium);$('#bonnetBtn')?.addEventListener('click',()=>playClip(/bonnet/i));$('#doorsBtn')?.addEventListener('click',()=>playClip(/door/i));$('#interiorBtn')?.addEventListener('click',()=>setCamera('interior'));
 }
 function handleChoice(b){const id=b.dataset.opt; if(b.dataset.locked){openPremium();return} const tab=activeTab;
-  if(tab==='vehicle'){state.vehicle=id;state.name=state.mode==='scratch'?'Forge Custom':catalog.vehicles.find(v=>v.id===id).name;loadVehicle();return}
+  if(tab==='vehicle'){const ref=catalog.referenceModels?.find(v=>v.id===id); if(ref){state.vehicle=id;state.name=ref.brand+' '+ref.name;loadVehicle();renderConfig();return} const base=catalog.vehicles.find(v=>v.id===id); if(base){state.vehicle=id;state.name=state.mode==='scratch'?'Forge Custom':base.name;loadVehicle();renderConfig();return}}
   if(tab==='exterior'){const hit=[...catalog.bodykits].find(x=>x.id===id);if(hit){state.body=id;renderConfig();return}}
   if(tab==='wheels'){if(catalog.wheels.some(x=>x.id===id))state.wheel=id;else if(catalog.brakes.some(x=>x.id===id))state.brakes=id;renderConfig();return}
   if(tab==='interior'){state.interior=id;renderConfig();return}
@@ -175,17 +208,17 @@ function handleChoice(b){const id=b.dataset.opt; if(b.dataset.locked){openPremiu
 }
 
 async function loadVehicle(){
-  const v=catalog.vehicles.find(x=>x.id===state.vehicle);if(!v)return;
+  const v=activeProfile();if(!v)return; const base=catalog.vehicles.find(x=>x.id===activeVisualBase(v))||v;
   $('#loading').classList.remove('hidden');$('#loadStatus').textContent=`Preparing ${v.name}…`;
   if(carRoot){scene.remove(carRoot)};
   extras=null;mixer=null;wheelOriginals=[];
   try{
-    const gltf=await loadModel(v,true);
+    const gltf=await loadModel(base,true);
     carRoot=gltf.scene;currentVehicle=v;scene.add(carRoot);
     carRoot.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;if(o.material){const mats=Array.isArray(o.material)?o.material:[o.material];mats.forEach(m=>{if('roughness'in m)m.roughness=Math.min(m.roughness+.03,.9);if('metalness'in m)m.metalness=Math.max(m.metalness,.05)})}}});
     mixer=gltf.animations?.length?new THREE.AnimationMixer(carRoot):null;
     if(gltf.animations?.length){const idle=gltf.animations.find(a=>/wheel-roll/i.test(a.name))||gltf.animations[0];mixer.clipAction(idle).play()}
-    fitModel();applyAllMaterials();applyVehicleTransforms();applyDetails();setCamera(cameraMode,true);$('#assetLabel').textContent=`GLB / ${Math.round(v.hp)} HP BASE`;$('#loading').classList.add('hidden');toast('3D vehicle ready');
+    fitModel();applyAllMaterials();applyVehicleTransforms();applyDetails();setCamera(cameraMode,true);$('#assetLabel').textContent=`3D REFERENCE / ${v.brand?v.brand+' · ':''}${v.name}`;$('#loading').classList.add('hidden');toast('3D vehicle ready');
   }catch(err){console.error(err);$('#loadStatus').textContent='The 3D asset could not be loaded. Check your connection and refresh.';$('#assetLabel').textContent='GLB / LOAD ERROR'}
 }
 function fitModel(){
@@ -207,7 +240,7 @@ function playClip(re){if(!mixer||!carRoot)return;const clip=carRoot.animations?.
 
 function setCamera(mode,snap=false){cameraMode=mode;const poses={hero:[7.2,3.5,8.2],front:[0,2.5,10.5],rear:[0,2.4,-10.5],side:[10.2,2.7,0],interior:[0,1.2,0.25]};const p=poses[mode]||poses.hero;camera.position.set(...p);if(mode==='interior'){controls.target.set(0,1.15,1.2)}else controls.target.set(0,.85,0);controls.maxDistance=mode==='interior'?3.2:15;controls.minDistance=mode==='interior'?.4:3.2;if(snap)controls.update();document.querySelectorAll('[data-camera]').forEach(b=>b.classList.toggle('active',b.dataset.camera===mode));}
 
-function updateAll(){if(!catalog)return;const v=catalog.vehicles.find(x=>x.id===state.vehicle),e=catalog.engines.find(x=>x.id===state.engine),d=catalog.drivetrains.find(x=>x.id===state.drivetrain),t=catalog.transmissions.find(x=>x.id===state.transmission),b=catalog.bodykits.find(x=>x.id===state.body),w=catalog.wheels.find(x=>x.id===state.wheel),br=catalog.brakes.find(x=>x.id===state.brakes),a=catalog.aero.find(x=>x.id===state.aero),i=catalog.interiors.find(x=>x.id===state.interior),p=catalog.paints.find(x=>x.id===state.paint);
+function updateAll(){if(!catalog)return;const v=activeProfile(),e=catalog.engines.find(x=>x.id===state.engine),d=catalog.drivetrains.find(x=>x.id===state.drivetrain),t=catalog.transmissions.find(x=>x.id===state.transmission),b=catalog.bodykits.find(x=>x.id===state.body),w=catalog.wheels.find(x=>x.id===state.wheel),br=catalog.brakes.find(x=>x.id===state.brakes),a=catalog.aero.find(x=>x.id===state.aero),i=catalog.interiors.find(x=>x.id===state.interior),p=catalog.paints.find(x=>x.id===state.paint);
  let hp=Math.round(v.hp + (e.hp-v.hp)*.62 + (a.downforce*.08));let tq=Math.round(v.torque + (e.torque-v.torque)*.62);let wt=Math.max(980,Math.round(v.weight + e.weight + br.weight + (w.size-20)*3 - (state.weightReduction?95:0)));let zero=Math.max(2.3, v.zero + (e.zero*.7) + t.shift - d.bias*0.35 + (state.ride<0?-0.08:state.ride*.002) - (b.drop<0?.08:0) - a.downforce*.0012);let top=Math.min(390,Math.round(v.top + e.top + d.bias*2 + (b.drop<0?4:0) - (state.track>15?2:0)));const power=hp/(wt/1000);let price=v.basePrice+p.price+w.price+b.price+e.price+d.price+t.price+br.price+a.price+i.price+(state.weightReduction?3200:0);
  $('#hp').textContent=hp;$('#torque').textContent=tq;$('#zero').textContent=zero.toFixed(1);$('#top').textContent=top;$('#weight').textContent=wt.toLocaleString();$('#pwr').textContent=Math.round(power);$('#price').textContent='$'+Math.round(price).toLocaleString();$('#driveLabel').textContent=`${d.name} · ${t.name}`.toUpperCase();$('#engineLabel').textContent=e.name.toUpperCase();$('#progressBar').style.width=Math.min(100,Math.round((countConfigured()/16)*100))+'%';$('#progressText').textContent=`${countConfigured()} / 16`;$('#proBadge').textContent=state.pro?'PRO ON':'PRO OFF';$('#proBadge').classList.toggle('on',state.pro);
  const pn=$('#paintName');if(pn)pn.textContent=`${p.name} · ${p.type} · ${p.price?'$'+p.price:'included'}`;
@@ -215,6 +248,6 @@ function updateAll(){if(!catalog)return;const v=catalog.vehicles.find(x=>x.id===
 function countConfigured(){let n=0;for(const x of [state.vehicle,state.paint,state.wheel,state.body,state.interior,state.engine,state.drivetrain,state.transmission,state.brakes,state.aero])if(x)n++;if(state.ride||state.track||state.width||state.length)n++;if(state.lights)n++;return Math.min(16,n)}
 function openPremium(){$('#modal').classList.remove('hidden')}
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(window._toast);window._toast=setTimeout(()=>el.classList.remove('show'),2200)}
-function resetBuild(){Object.assign(state,{vehicle:'coupe',paint:'crimson',wheel:'split5',body:'sport',interior:'black',engine:'v6',drivetrain:'rwd',transmission:'dct',brakes:'bigsteel',aero:'active',ride:0,track:0,width:0,length:0,front:0,rear:0,lights:true,exhaust:true,weightReduction:false,name:'Aster GT'});activeTab='vehicle';document.querySelectorAll('.tabs button').forEach((b,i)=>b.classList.toggle('active',i===0));renderConfig();loadVehicle();toast('Build reset')}
+function resetBuild(){Object.assign(state,{vehicle:'bmw-m3-xdrive',paint:'crimson',wheel:'split5',body:'sport',interior:'black',engine:'v6',drivetrain:'rwd',transmission:'dct',brakes:'bigsteel',aero:'active',ride:0,track:0,width:0,length:0,front:0,rear:0,lights:true,exhaust:true,weightReduction:false,name:'BMW M3 Competition xDrive'});activeTab='vehicle';document.querySelectorAll('.tabs button').forEach((b,i)=>b.classList.toggle('active',i===0));renderConfig();loadVehicle();toast('Build reset')}
 function saveBuild(){const spec={name:state.name,vehicle:state.vehicle,paint:state.paint,wheel:state.wheel,body:state.body,interior:state.interior,engine:state.engine,drivetrain:state.drivetrain,transmission:state.transmission,brakes:state.brakes,aero:state.aero,ride:state.ride,track:state.track,pro:state.pro};const blob=new Blob([JSON.stringify(spec,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${(state.name||'driveforge-build').replace(/[^a-z0-9]+/gi,'-').toLowerCase()}.json`;a.click();URL.revokeObjectURL(a.href);toast('Build sheet saved')}
 function escapeHtml(s){return s.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
