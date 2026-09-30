@@ -1,1 +1,707 @@
-{"vehicles":[{"id":"sedan","name":"Aster S4","category":"Sedan","tag":"executive sport","basePrice":54900,"weight":1580,"hp":310,"torque":420,"zero":5.3,"top":250,"url":"https://cdn.3dassets.dev/assets/18684/v1/model.glb","source":"Contemporary saloon \u00b7 3DAssets.dev"},{"id":"coupe","name":"Aster GT","category":"Coupe","tag":"grand touring","basePrice":68900,"weight":1490,"hp":380,"torque":500,"zero":4.8,"top":270,"url":"https://cdn.3dassets.dev/assets/18681/v1/model.glb","source":"Grand touring coupe \u00b7 3DAssets.dev"},{"id":"hatch","name":"Aster R5","category":"Hatchback","tag":"hot hatch","basePrice":42900,"weight":1370,"hp":280,"torque":390,"zero":5.2,"top":245,"url":"https://cdn.3dassets.dev/assets/27798/v1/model.glb","source":"Five-door hatchback \u00b7 3DAssets.dev"},{"id":"estate","name":"Aster Tour","category":"Wagon","tag":"sport estate","basePrice":49900,"weight":1510,"hp":320,"torque":450,"zero":5.0,"top":252,"url":"https://cdn.3dassets.dev/assets/15103/v1/model.glb","source":"Long-roof estate \u00b7 3DAssets.dev"},{"id":"crossover","name":"Aster XR","category":"SUV","tag":"performance crossover","basePrice":61900,"weight":1780,"hp":360,"torque":520,"zero":5.5,"top":240,"url":"https://cdn.3dassets.dev/assets/15106/v1/model.glb","source":"Compact crossover \u00b7 3DAssets.dev"},{"id":"suv","name":"Aster Atlas","category":"SUV","tag":"three-row luxury","basePrice":74900,"weight":2050,"hp":420,"torque":600,"zero":5.9,"top":235,"url":"https://cdn.3dassets.dev/assets/18686/v1/model.glb","source":"Large three-row SUV \u00b7 3DAssets.dev"},{"id":"roadster","name":"Aster RS","category":"Roadster","tag":"open-top sports","basePrice":72900,"weight":1320,"hp":430,"torque":520,"zero":4.1,"top":285,"url":"https://cdn.3dassets.dev/assets/18687/v1/model.glb","source":"Two-seat roadster \u00b7 3DAssets.dev"},{"id":"supercar","name":"Aster Veloce","category":"Supercar","tag":"mid-engine","basePrice":189900,"weight":1290,"hp":620,"torque":610,"zero":3.0,"top":335,"url":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","source":"Mid-engine supercar \u00b7 3DAssets.dev"}],"paints":[{"id":"obsidian","name":"Obsidian Black","hex":"#0a0c0f","type":"Metallic","price":0},{"id":"arctic","name":"Arctic Silver","hex":"#bfc5ca","type":"Metallic","price":650},{"id":"crimson","name":"Crimson Red","hex":"#7c101b","type":"Pearl","price":950},{"id":"deepblue","name":"Deep Ocean","hex":"#0c2a50","type":"Metallic","price":950},{"id":"champagne","name":"Champagne","hex":"#a89170","type":"Satin","price":1250},{"id":"chalk","name":"Chalk White","hex":"#e7e5df","type":"Gloss","price":350},{"id":"racinggreen","name":"Racing Green","hex":"#0d4a39","type":"Pearl","price":1000},{"id":"nardo","name":"Stealth Grey","hex":"#3f4347","type":"Matte","price":1600}],"wheels":[{"id":"oem","name":"20\" Aero","size":20,"finish":"Satin alloy","price":0,"pro":false},{"id":"mesh","name":"21\" Mesh","size":21,"finish":"Gunmetal","price":1800,"pro":false},{"id":"split5","name":"21\" Split 5","size":21,"finish":"Diamond cut","price":2400,"pro":false},{"id":"forged","name":"22\" Forged","size":22,"finish":"Brushed titanium","price":4800,"pro":true},{"id":"carbon","name":"22\" Carbon aero","size":22,"finish":"Carbon barrel","price":6200,"pro":true}],"bodykits":[{"id":"stock","name":"Stock","desc":"Factory form","price":0,"pro":false,"drop":0,"width":0,"downforce":0},{"id":"sport","name":"Sport","desc":"Subtle aero","price":1800,"pro":false,"drop":-5,"width":12,"downforce":20},{"id":"street","name":"Street","desc":"Lower + wider","price":4200,"pro":false,"drop":-12,"width":28,"downforce":35},{"id":"wide","name":"Widebody","desc":"Fender flares","price":7200,"pro":true,"drop":-18,"width":52,"downforce":70},{"id":"track","name":"Track","desc":"Splitter + wing","price":8900,"pro":true,"drop":-24,"width":38,"downforce":140},{"id":"luxury","name":"Luxury","desc":"Chrome + comfort","price":6500,"pro":true,"drop":-4,"width":10,"downforce":10}],"engines":[{"id":"i3","name":"I3 Turbo","layout":"Inline-3","hp":165,"torque":250,"weight":130,"zero":0.8,"top":-12,"price":0,"pro":false},{"id":"i4","name":"I4 Turbo","layout":"Inline-4","hp":280,"torque":390,"weight":160,"zero":0.2,"top":0,"price":0,"pro":false},{"id":"i6","name":"I6 Turbo","layout":"Inline-6","hp":420,"torque":520,"weight":205,"zero":-0.1,"top":8,"price":6200,"pro":false},{"id":"v6","name":"V6 Twin-Turbo","layout":"V6","hp":510,"torque":590,"weight":220,"zero":-0.3,"top":14,"price":8800,"pro":false},{"id":"v8","name":"V8 Twin-Turbo","layout":"V8","hp":690,"torque":780,"weight":275,"zero":-0.6,"top":22,"price":14500,"pro":false},{"id":"v10","name":"V10 Naturally Aspirated","layout":"V10","hp":780,"torque":720,"weight":265,"zero":-0.7,"top":30,"price":21000,"pro":true},{"id":"v12","name":"V12 Twin-Turbo","layout":"V12","hp":900,"torque":950,"weight":335,"zero":-0.9,"top":38,"price":32000,"pro":true},{"id":"electric","name":"Dual Motor EV","layout":"Electric","hp":610,"torque":820,"weight":-40,"zero":-1.0,"top":18,"price":12000,"pro":false},{"id":"hybrid","name":"Twin-Turbo Hybrid","layout":"Hybrid","hp":720,"torque":860,"weight":100,"zero":-0.75,"top":28,"price":19000,"pro":true}],"drivetrains":[{"id":"fwd","name":"FWD","bias":0,"price":0},{"id":"rwd","name":"RWD","bias":0.1,"price":1200},{"id":"awd","name":"AWD","bias":0.2,"price":3200}],"transmissions":[{"id":"manual","name":"6-speed manual","shift":0.18,"price":0},{"id":"dct","name":"8-speed DCT","shift":-0.18,"price":3500},{"id":"auto","name":"10-speed automatic","shift":-0.05,"price":1800}],"brakes":[{"id":"steel","name":"Performance steel","price":0,"weight":0},{"id":"bigsteel","name":"Big brake package","price":2500,"weight":4},{"id":"carbonceramic","name":"Carbon-ceramic","price":8500,"weight":-14,"pro":true}],"interiors":[{"id":"black","name":"Black leather","accent":"#151515","price":0},{"id":"tan","name":"Saddle leather","accent":"#7a5236","price":1200},{"id":"red","name":"Burgundy leather","accent":"#5e1821","price":1500},{"id":"alcantara","name":"Alcantara + leather","accent":"#24272b","price":2100},{"id":"carbon","name":"Carbon + Alcantara","accent":"#0d0f10","price":3900,"pro":true}],"aero":[{"id":"clean","name":"Clean aero","price":0,"downforce":0},{"id":"active","name":"Active aero","price":4500,"downforce":75},{"id":"race","name":"Race aero","price":9800,"downforce":180,"pro":true}],"referenceModels":[{"id":"bmw-m3-xdrive","brand":"BMW","name":"M3 Competition xDrive","year":"2026","category":"Sedan","tag":"high-performance sports sedan","base":"sedan","basePrice":88600,"weight":1780,"hp":523,"torque":650,"zero":3.4,"top":290,"url":"https://cdn.3dassets.dev/assets/15104/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18684/v1/model.glb","visualLabel":"Executive sedan"},{"id":"bmw-m4-xdrive","brand":"BMW","name":"M4 Competition xDrive","year":"2026","category":"Coupe","tag":"high-performance coupe","base":"coupe","basePrice":91500,"weight":1725,"hp":523,"torque":650,"zero":3.4,"top":290,"url":"https://cdn.3dassets.dev/assets/15108/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18681/v1/model.glb","visualLabel":"Grand touring coupe"},{"id":"bmw-m5","brand":"BMW","name":"M5 Sedan","year":"2026","category":"Sedan","tag":"performance hybrid sedan","base":"sedan","basePrice":120000,"weight":1970,"hp":717,"torque":1000,"zero":3.4,"top":305,"url":"https://cdn.3dassets.dev/assets/15104/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18684/v1/model.glb","visualLabel":"Executive sedan"},{"id":"bmw-x5m","brand":"BMW","name":"X5 M Competition","year":"2026","category":"SUV","tag":"performance SUV","base":"suv","basePrice":131000,"weight":2380,"hp":617,"torque":750,"zero":3.7,"top":285,"url":"https://cdn.3dassets.dev/assets/15110/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18686/v1/model.glb","visualLabel":"Touring SUV"},{"id":"bmw-i5-m60","brand":"BMW","name":"i5 M60","year":"2026","category":"Sedan","tag":"electric performance sedan","base":"sedan","basePrice":84100,"weight":2390,"hp":593,"torque":820,"zero":3.7,"top":230,"url":"https://cdn.3dassets.dev/assets/15104/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18684/v1/model.glb","visualLabel":"Executive sedan"},{"id":"dodge-charger-rt","brand":"Dodge","name":"Charger R/T","year":"2026","category":"Muscle Sedan","tag":"twin-turbo muscle sedan","base":"sedan","basePrice":49995,"weight":2206,"hp":420,"torque":568,"zero":4.6,"top":250,"url":"https://cdn.3dassets.dev/assets/15104/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18684/v1/model.glb","visualLabel":"Executive sedan"},{"id":"dodge-charger-scat","brand":"Dodge","name":"Charger Scat Pack","year":"2026","category":"Muscle Coupe","tag":"high-output twin-turbo muscle","base":"coupe","basePrice":54995,"weight":2229,"hp":550,"torque":720,"zero":3.9,"top":280,"url":"https://cdn.3dassets.dev/assets/15108/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18681/v1/model.glb","visualLabel":"Grand touring coupe"},{"id":"dodge-daytona","brand":"Dodge","name":"Charger Daytona Scat Pack","year":"2026","category":"Muscle EV","tag":"all-electric performance muscle","base":"coupe","basePrice":59995,"weight":2840,"hp":670,"torque":850,"zero":3.3,"top":216,"url":"https://cdn.3dassets.dev/assets/15108/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18681/v1/model.glb","visualLabel":"Grand touring coupe"},{"id":"ford-mustang-gt","brand":"Ford","name":"Mustang GT","year":"2026","category":"Muscle Coupe","tag":"5.0 V8 fastback","base":"coupe","basePrice":51080,"weight":1770,"hp":486,"torque":567,"zero":4.0,"top":250,"url":"https://cdn.3dassets.dev/assets/15108/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18681/v1/model.glb","visualLabel":"Grand touring coupe"},{"id":"toyota-supra-30","brand":"Toyota","name":"GR Supra 3.0","year":"2026","category":"Sports Coupe","tag":"turbo straight-six sports car","base":"coupe","basePrice":56900,"weight":1545,"hp":382,"torque":499,"zero":3.9,"top":250,"url":"https://cdn.3dassets.dev/assets/15108/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18681/v1/model.glb","visualLabel":"Grand touring coupe"},{"id":"porsche-911-carrera","brand":"Porsche","name":"911 Carrera","year":"2026","category":"Sports Coupe","tag":"rear-engine sports car","base":"coupe","basePrice":135500,"weight":1530,"hp":388,"torque":450,"zero":4.1,"top":294,"url":"https://cdn.3dassets.dev/assets/15108/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18681/v1/model.glb","visualLabel":"Grand touring coupe"},{"id":"porsche-911-turbo-s","brand":"Porsche","name":"911 Turbo S","year":"2026","category":"Supercar","tag":"T-Hybrid flagship","base":"supercar","basePrice":192000,"weight":1690,"hp":711,"torque":800,"zero":2.5,"top":322,"url":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","visualLabel":"Mid-engine sports car"},{"id":"corvette-stingray","brand":"Chevrolet","name":"Corvette Stingray","year":"2026","category":"Supercar","tag":"mid-engine V8 sports car","base":"supercar","basePrice":70000,"weight":1530,"hp":495,"torque":637,"zero":2.9,"top":312,"url":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","visualLabel":"Mid-engine sports car"},{"id":"corvette-zr1x","brand":"Chevrolet","name":"Corvette ZR1X","year":"2026","category":"Hypercar","tag":"twin-turbo V8 hybrid AWD","base":"supercar","basePrice":250000,"weight":1700,"hp":1250,"torque":1320,"zero":2.0,"top":350,"url":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","visualLabel":"Mid-engine sports car"},{"id":"nissan-gtr","brand":"Nissan","name":"GT-R","year":"2024","category":"Supercar","tag":"twin-turbo AWD icon","base":"supercar","basePrice":121000,"weight":1785,"hp":565,"torque":633,"zero":2.9,"top":315,"url":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","visualLabel":"Mid-engine sports car"},{"id":"honda-type-r","brand":"Honda","name":"Civic Type R","year":"2026","category":"Hatchback","tag":"front-drive performance hatch","base":"hatch","basePrice":46000,"weight":1430,"hp":315,"torque":420,"zero":5.4,"top":275,"url":"https://cdn.3dassets.dev/assets/15109/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/27798/v1/model.glb","visualLabel":"Compact hatchback"},{"id":"subaru-wrx","brand":"Subaru","name":"WRX tS","year":"2026","category":"Sedan","tag":"AWD turbo sport sedan","base":"sedan","basePrice":48000,"weight":1605,"hp":271,"torque":350,"zero":5.7,"top":240,"url":"https://cdn.3dassets.dev/assets/15104/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18684/v1/model.glb","visualLabel":"Executive sedan"},{"id":"mercedes-amg-gt","brand":"Mercedes-AMG","name":"AMG GT 63","year":"2026","category":"Grand Touring","tag":"luxury performance coupe","base":"coupe","basePrice":188000,"weight":1970,"hp":577,"torque":800,"zero":3.2,"top":315,"url":"https://cdn.3dassets.dev/assets/15108/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18681/v1/model.glb","visualLabel":"Grand touring coupe"},{"id":"audi-rs6","brand":"Audi","name":"RS 6 Avant performance","year":"2026","category":"Wagon","tag":"high-performance estate","base":"estate","basePrice":130000,"weight":2080,"hp":621,"torque":850,"zero":3.4,"top":305,"url":"https://cdn.3dassets.dev/assets/15103/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/15103/v1/model.glb","visualLabel":"Long-roof estate"},{"id":"lexus-lc500","brand":"Lexus","name":"LC 500","year":"2026","category":"Coupe","tag":"naturally aspirated V8 GT","base":"coupe","basePrice":102000,"weight":1980,"hp":471,"torque":540,"zero":4.7,"top":270,"url":"https://cdn.3dassets.dev/assets/15108/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18681/v1/model.glb","visualLabel":"Grand touring coupe"},{"id":"mclaren-artura","brand":"McLaren","name":"Artura","year":"2026","category":"Supercar","tag":"twin-turbo V6 hybrid","base":"supercar","basePrice":240000,"weight":1498,"hp":690,"torque":720,"zero":3.0,"top":330,"url":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","visualLabel":"Mid-engine sports car"},{"id":"aston-vantage","brand":"Aston Martin","name":"Vantage","year":"2026","category":"Sports Coupe","tag":"twin-turbo V8 GT","base":"coupe","basePrice":191000,"weight":1745,"hp":656,"torque":800,"zero":3.4,"top":325,"url":"https://cdn.3dassets.dev/assets/15108/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/18681/v1/model.glb","visualLabel":"Grand touring coupe"},{"id":"lamborghini-revuelto","brand":"Lamborghini","name":"Revuelto","year":"2026","category":"Hypercar","tag":"V12 plug-in hybrid","base":"supercar","basePrice":608000,"weight":1772,"hp":1001,"torque":725,"zero":2.5,"top":350,"url":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","visualLabel":"Mid-engine sports car"},{"id":"ferrari-296","brand":"Ferrari","name":"296 GTB","year":"2026","category":"Supercar","tag":"V6 plug-in hybrid","base":"supercar","basePrice":347000,"weight":1470,"hp":819,"torque":740,"zero":2.9,"top":330,"url":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","source":"Original 3D reference base \u00b7 selected real-world model profile","reference":true,"visualUrl":"https://cdn.3dassets.dev/assets/15113/v1/model.glb","visualLabel":"Mid-engine sports car"}],"realCarDisclaimer":"Real-world model names and reference specifications are used for profile context. DriveForge does not bundle OEM logos or manufacturer-owned 3D assets; the displayed 3D geometry is an original reference base."}
+{
+  "version": 1,
+  "cars": [
+    {
+      "id": "bmw-m3",
+      "brand": "BMW",
+      "model": "M3 Competition xDrive",
+      "category": "Sedan",
+      "style": "sports-sedan",
+      "price": 82800,
+      "hp": 523,
+      "torque": 650,
+      "zero": 3.4,
+      "top": 290,
+      "weight": 1780,
+      "drive": "AWD",
+      "visual": "sedan"
+    },
+    {
+      "id": "bmw-m4",
+      "brand": "BMW",
+      "model": "M4 Competition xDrive",
+      "category": "Coupe",
+      "style": "sport-coupe",
+      "price": 86100,
+      "hp": 523,
+      "torque": 650,
+      "zero": 3.4,
+      "top": 290,
+      "weight": 1725,
+      "drive": "AWD",
+      "visual": "coupe"
+    },
+    {
+      "id": "bmw-x5m",
+      "brand": "BMW",
+      "model": "X5 M Competition",
+      "category": "SUV",
+      "style": "performance-suv",
+      "price": 123300,
+      "hp": 617,
+      "torque": 750,
+      "zero": 3.7,
+      "top": 285,
+      "weight": 2380,
+      "drive": "AWD",
+      "visual": "suv"
+    },
+    {
+      "id": "dodge-charger",
+      "brand": "Dodge",
+      "model": "Charger Scat Pack",
+      "category": "Muscle",
+      "style": "muscle-coupe",
+      "price": 54995,
+      "hp": 550,
+      "torque": 720,
+      "zero": 3.9,
+      "top": 285,
+      "weight": 2229,
+      "drive": "AWD",
+      "visual": "muscle"
+    },
+    {
+      "id": "dodge-daytona",
+      "brand": "Dodge",
+      "model": "Charger Daytona Scat Pack",
+      "category": "Muscle EV",
+      "style": "electric-muscle",
+      "price": 59995,
+      "hp": 670,
+      "torque": 850,
+      "zero": 3.3,
+      "top": 216,
+      "weight": 2840,
+      "drive": "AWD",
+      "visual": "muscle"
+    },
+    {
+      "id": "mustang-gt",
+      "brand": "Ford",
+      "model": "Mustang GT",
+      "category": "Muscle Coupe",
+      "style": "fastback",
+      "price": 51080,
+      "hp": 486,
+      "torque": 567,
+      "zero": 4.0,
+      "top": 250,
+      "weight": 1770,
+      "drive": "RWD",
+      "visual": "muscle"
+    },
+    {
+      "id": "mustang-dark-horse",
+      "brand": "Ford",
+      "model": "Mustang Dark Horse",
+      "category": "Muscle Coupe",
+      "style": "track-fastback",
+      "price": 63380,
+      "hp": 500,
+      "torque": 567,
+      "zero": 4.0,
+      "top": 250,
+      "weight": 1800,
+      "drive": "RWD",
+      "visual": "muscle"
+    },
+    {
+      "id": "supra",
+      "brand": "Toyota",
+      "model": "GR Supra 3.0",
+      "category": "Sports Coupe",
+      "style": "sports-coupe",
+      "price": 56900,
+      "hp": 382,
+      "torque": 499,
+      "zero": 3.9,
+      "top": 250,
+      "weight": 1545,
+      "drive": "RWD",
+      "visual": "coupe"
+    },
+    {
+      "id": "porsche-911",
+      "brand": "Porsche",
+      "model": "911 Carrera",
+      "category": "Sports Car",
+      "style": "rear-engine-sports",
+      "price": 135500,
+      "hp": 388,
+      "torque": 450,
+      "zero": 4.1,
+      "top": 294,
+      "weight": 1530,
+      "drive": "RWD",
+      "visual": "911"
+    },
+    {
+      "id": "porsche-turbos",
+      "brand": "Porsche",
+      "model": "911 Turbo S",
+      "category": "Sports Car",
+      "style": "high-performance",
+      "price": 207000,
+      "hp": 701,
+      "torque": 800,
+      "zero": 2.6,
+      "top": 322,
+      "weight": 1700,
+      "drive": "AWD",
+      "visual": "911"
+    },
+    {
+      "id": "corvette",
+      "brand": "Chevrolet",
+      "model": "Corvette Stingray",
+      "category": "Supercar",
+      "style": "mid-engine",
+      "price": 70000,
+      "hp": 495,
+      "torque": 637,
+      "zero": 2.9,
+      "top": 312,
+      "weight": 1530,
+      "drive": "RWD",
+      "visual": "supercar"
+    },
+    {
+      "id": "gtr",
+      "brand": "Nissan",
+      "model": "GT-R",
+      "category": "Supercar",
+      "style": "AWD supercar",
+      "price": 121000,
+      "hp": 565,
+      "torque": 633,
+      "zero": 2.9,
+      "top": 315,
+      "weight": 1785,
+      "drive": "AWD",
+      "visual": "gtr"
+    },
+    {
+      "id": "amg-gt",
+      "brand": "Mercedes-AMG",
+      "model": "GT 63",
+      "category": "Grand Touring",
+      "style": "luxury-performance",
+      "price": 188000,
+      "hp": 577,
+      "torque": 800,
+      "zero": 3.2,
+      "top": 315,
+      "weight": 1970,
+      "drive": "AWD",
+      "visual": "gt"
+    },
+    {
+      "id": "rs6",
+      "brand": "Audi",
+      "model": "RS 6 Avant performance",
+      "category": "Wagon",
+      "style": "super-wagon",
+      "price": 130000,
+      "hp": 621,
+      "torque": 850,
+      "zero": 3.4,
+      "top": 305,
+      "weight": 2080,
+      "drive": "AWD",
+      "visual": "wagon"
+    },
+    {
+      "id": "lc500",
+      "brand": "Lexus",
+      "model": "LC 500",
+      "category": "Grand Tourer",
+      "style": "luxury-coupe",
+      "price": 102000,
+      "hp": 471,
+      "torque": 540,
+      "zero": 4.7,
+      "top": 270,
+      "weight": 1980,
+      "drive": "RWD",
+      "visual": "gt"
+    },
+    {
+      "id": "type-r",
+      "brand": "Honda",
+      "model": "Civic Type R",
+      "category": "Hot Hatch",
+      "style": "front-drive-performance",
+      "price": 46000,
+      "hp": 315,
+      "torque": 420,
+      "zero": 5.4,
+      "top": 275,
+      "weight": 1430,
+      "drive": "FWD",
+      "visual": "hatch"
+    },
+    {
+      "id": "wrx",
+      "brand": "Subaru",
+      "model": "WRX tS",
+      "category": "Sports Sedan",
+      "style": "awd-sedan",
+      "price": 48000,
+      "hp": 271,
+      "torque": 350,
+      "zero": 5.7,
+      "top": 240,
+      "weight": 1605,
+      "drive": "AWD",
+      "visual": "sedan"
+    },
+    {
+      "id": "artura",
+      "brand": "McLaren",
+      "model": "Artura",
+      "category": "Supercar",
+      "style": "hybrid-supercar",
+      "price": 240000,
+      "hp": 690,
+      "torque": 720,
+      "zero": 3.0,
+      "top": 330,
+      "weight": 1498,
+      "drive": "RWD",
+      "visual": "supercar"
+    },
+    {
+      "id": "vantage",
+      "brand": "Aston Martin",
+      "model": "Vantage",
+      "category": "Sports Coupe",
+      "style": "gt-sports",
+      "price": 191000,
+      "hp": 656,
+      "torque": 800,
+      "zero": 3.4,
+      "top": 325,
+      "weight": 1745,
+      "drive": "RWD",
+      "visual": "gt"
+    },
+    {
+      "id": "revuelto",
+      "brand": "Lamborghini",
+      "model": "Revuelto",
+      "category": "Hypercar",
+      "style": "v12-hybrid",
+      "price": 608000,
+      "hp": 1001,
+      "torque": 725,
+      "zero": 2.5,
+      "top": 350,
+      "weight": 1772,
+      "drive": "AWD",
+      "visual": "hypercar"
+    },
+    {
+      "id": "296",
+      "brand": "Ferrari",
+      "model": "296 GTB",
+      "category": "Supercar",
+      "style": "v6-hybrid",
+      "price": 347000,
+      "hp": 819,
+      "torque": 740,
+      "zero": 2.9,
+      "top": 330,
+      "weight": 1470,
+      "drive": "RWD",
+      "visual": "supercar"
+    }
+  ],
+  "paints": [
+    {
+      "id": "black",
+      "name": "Obsidian Black",
+      "color": "#090b0e",
+      "finish": "Metallic",
+      "cost": 0,
+      "metal": 0.9,
+      "rough": 0.15
+    },
+    {
+      "id": "white",
+      "name": "Arctic White",
+      "color": "#e9edf0",
+      "finish": "Pearl",
+      "cost": 650,
+      "metal": 0.62,
+      "rough": 0.14
+    },
+    {
+      "id": "silver",
+      "name": "Titanium Silver",
+      "color": "#8f969d",
+      "finish": "Metallic",
+      "cost": 850,
+      "metal": 0.88,
+      "rough": 0.19
+    },
+    {
+      "id": "red",
+      "name": "Performance Red",
+      "color": "#8c0f16",
+      "finish": "Pearl",
+      "cost": 950,
+      "metal": 0.55,
+      "rough": 0.16
+    },
+    {
+      "id": "blue",
+      "name": "Deep Sapphire",
+      "color": "#092b50",
+      "finish": "Metallic",
+      "cost": 950,
+      "metal": 0.78,
+      "rough": 0.17
+    },
+    {
+      "id": "green",
+      "name": "British Racing Green",
+      "color": "#0d3f32",
+      "finish": "Pearl",
+      "cost": 1100,
+      "metal": 0.68,
+      "rough": 0.17
+    },
+    {
+      "id": "grey",
+      "name": "Stealth Grey",
+      "color": "#3d4146",
+      "finish": "Matte",
+      "cost": 1450,
+      "metal": 0.18,
+      "rough": 0.48
+    },
+    {
+      "id": "champagne",
+      "name": "Champagne Gold",
+      "color": "#a28b68",
+      "finish": "Satin",
+      "cost": 1700,
+      "metal": 0.72,
+      "rough": 0.29
+    }
+  ],
+  "wheels": [
+    {
+      "id": "oem",
+      "name": "20\" Performance",
+      "size": 20,
+      "finish": "Satin alloy",
+      "cost": 0,
+      "spokes": 10
+    },
+    {
+      "id": "mesh",
+      "name": "21\" Mesh",
+      "size": 21,
+      "finish": "Gunmetal",
+      "cost": 1800,
+      "spokes": 12
+    },
+    {
+      "id": "split",
+      "name": "21\" Split-5",
+      "size": 21,
+      "finish": "Diamond cut",
+      "cost": 2400,
+      "spokes": 10
+    },
+    {
+      "id": "forged",
+      "name": "22\" Forged",
+      "size": 22,
+      "finish": "Brushed titanium",
+      "cost": 4800,
+      "spokes": 8,
+      "premium": true
+    },
+    {
+      "id": "carbon",
+      "name": "22\" Carbon Aero",
+      "size": 22,
+      "finish": "Carbon fiber",
+      "cost": 6200,
+      "spokes": 6,
+      "premium": true
+    }
+  ],
+  "bodykits": [
+    {
+      "id": "stock",
+      "name": "Factory",
+      "desc": "Original body surfaces",
+      "cost": 0,
+      "drop": 0,
+      "width": 0,
+      "downforce": 0
+    },
+    {
+      "id": "sport",
+      "name": "Sport",
+      "desc": "Lower front + side aero",
+      "cost": 2200,
+      "drop": -5,
+      "width": 10,
+      "downforce": 25
+    },
+    {
+      "id": "street",
+      "name": "Street",
+      "desc": "Lower + wider stance",
+      "cost": 4500,
+      "drop": -12,
+      "width": 25,
+      "downforce": 42
+    },
+    {
+      "id": "wide",
+      "name": "Widebody",
+      "desc": "Fender extensions + deep splitter",
+      "cost": 7800,
+      "drop": -16,
+      "width": 52,
+      "downforce": 78,
+      "premium": true
+    },
+    {
+      "id": "track",
+      "name": "Track Pack",
+      "desc": "Canards + diffuser + wing",
+      "cost": 9800,
+      "drop": -23,
+      "width": 38,
+      "downforce": 165,
+      "premium": true
+    },
+    {
+      "id": "luxury",
+      "name": "Executive",
+      "desc": "Clean aero + extended trim",
+      "cost": 6200,
+      "drop": -3,
+      "width": 8,
+      "downforce": 12,
+      "premium": true
+    }
+  ],
+  "engines": [
+    {
+      "id": "i3",
+      "name": "I3 Turbo",
+      "hp": 165,
+      "torque": 250,
+      "weight": 0,
+      "zero": 0.85,
+      "top": -14,
+      "cost": 0
+    },
+    {
+      "id": "i4",
+      "name": "I4 Turbo",
+      "hp": 280,
+      "torque": 390,
+      "weight": 15,
+      "zero": 0.35,
+      "top": 0,
+      "cost": 0
+    },
+    {
+      "id": "i6",
+      "name": "I6 Turbo",
+      "hp": 420,
+      "torque": 520,
+      "weight": 40,
+      "zero": 0.05,
+      "top": 8,
+      "cost": 6200
+    },
+    {
+      "id": "v6",
+      "name": "V6 Twin-Turbo",
+      "hp": 510,
+      "torque": 590,
+      "weight": 55,
+      "zero": -0.18,
+      "top": 14,
+      "cost": 8800
+    },
+    {
+      "id": "v8",
+      "name": "V8 Twin-Turbo",
+      "hp": 690,
+      "torque": 780,
+      "weight": 105,
+      "zero": -0.48,
+      "top": 22,
+      "cost": 14500
+    },
+    {
+      "id": "v10",
+      "name": "V10 Naturally Aspirated",
+      "hp": 780,
+      "torque": 720,
+      "weight": 95,
+      "zero": -0.62,
+      "top": 30,
+      "cost": 21000,
+      "premium": true
+    },
+    {
+      "id": "v12",
+      "name": "V12 Twin-Turbo",
+      "hp": 900,
+      "torque": 950,
+      "weight": 150,
+      "zero": -0.82,
+      "top": 38,
+      "cost": 32000,
+      "premium": true
+    },
+    {
+      "id": "ev",
+      "name": "Dual-Motor EV",
+      "hp": 610,
+      "torque": 820,
+      "weight": 85,
+      "zero": -0.72,
+      "top": 18,
+      "cost": 12000
+    },
+    {
+      "id": "hybrid",
+      "name": "Twin-Turbo Hybrid",
+      "hp": 720,
+      "torque": 860,
+      "weight": 70,
+      "zero": -0.6,
+      "top": 28,
+      "cost": 19000,
+      "premium": true
+    }
+  ],
+  "drives": [
+    {
+      "id": "fwd",
+      "name": "FWD",
+      "cost": 0,
+      "grip": 0
+    },
+    {
+      "id": "rwd",
+      "name": "RWD",
+      "cost": 1200,
+      "grip": 0.1
+    },
+    {
+      "id": "awd",
+      "name": "AWD",
+      "cost": 3200,
+      "grip": 0.22
+    }
+  ],
+  "transmissions": [
+    {
+      "id": "manual",
+      "name": "6-speed Manual",
+      "cost": 0,
+      "shift": 0.22
+    },
+    {
+      "id": "dct",
+      "name": "8-speed DCT",
+      "cost": 3500,
+      "shift": -0.18
+    },
+    {
+      "id": "auto",
+      "name": "10-speed Automatic",
+      "cost": 1800,
+      "shift": -0.05
+    }
+  ],
+  "brakes": [
+    {
+      "id": "steel",
+      "name": "Performance Steel",
+      "cost": 0,
+      "weight": 0
+    },
+    {
+      "id": "big",
+      "name": "Big Brake Package",
+      "cost": 2500,
+      "weight": 4
+    },
+    {
+      "id": "ceramic",
+      "name": "Carbon-Ceramic",
+      "cost": 8500,
+      "weight": -18,
+      "premium": true
+    }
+  ],
+  "interiors": [
+    {
+      "id": "black",
+      "name": "Black Leather",
+      "color": "#161719",
+      "cost": 0
+    },
+    {
+      "id": "tan",
+      "name": "Saddle Leather",
+      "color": "#725036",
+      "cost": 1200
+    },
+    {
+      "id": "red",
+      "name": "Burgundy Leather",
+      "color": "#5b1821",
+      "cost": 1500
+    },
+    {
+      "id": "alcantara",
+      "name": "Alcantara + Leather",
+      "color": "#26282b",
+      "cost": 2100
+    },
+    {
+      "id": "carbon",
+      "name": "Carbon + Alcantara",
+      "color": "#0f1113",
+      "cost": 3900,
+      "premium": true
+    }
+  ],
+  "aero": [
+    {
+      "id": "clean",
+      "name": "Clean",
+      "cost": 0,
+      "downforce": 0
+    },
+    {
+      "id": "active",
+      "name": "Active Aero",
+      "cost": 4500,
+      "downforce": 72
+    },
+    {
+      "id": "race",
+      "name": "Race Aero",
+      "cost": 9800,
+      "downforce": 180,
+      "premium": true
+    }
+  ]
+}
