@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DriveForge — 3D Car Configurator</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><div class="mark"></div><div><h1>DRIVEFORGE</h1><p>3D vehicle configurator</p></div></div>
+    <div class="top-actions"><button class="btn" id="resetBtn">Reset build</button><button class="btn accent" id="saveBtn">Save build</button></div>
+  </header>
+
+  <main class="viewport">
+    <div id="scene"></div><div class="atmo"></div>
+    <div class="showroom-copy"><div class="eyebrow">LIVE SHOWROOM · WEBGL</div><h2 id="heroName">Apex R</h2><span id="heroMeta">Mid-engine · 2 seats · rear-wheel drive</span></div>
+    <div class="camera" id="cameraTabs"><button class="active" data-cam="hero">3/4</button><button data-cam="front">Front</button><button data-cam="rear">Rear</button><button data-cam="side">Side</button><button data-cam="top">Top</button></div>
+    <div class="viewer-tools"><button class="tool-btn" id="rotateBtn" title="Auto rotate">↻</button><button class="tool-btn" id="doorBtn" title="Open doors">🚪</button><button class="tool-btn" id="hoodBtn" title="Open bonnet">▱</button></div>
+
+    <aside class="sidebar">
+      <section class="section"><div class="section-head"><h3>Build preset</h3><span>same real 3D shell</span></div><div class="card-row" id="presetChoices"></div></section>
+
+      <section class="section"><div class="section-head"><h3>Paint</h3><span>PBR clearcoat</span></div><div class="swatches" id="paintChoices"></div><div class="finish-row"><button class="finish active" data-finish="gloss">Gloss</button><button class="finish" data-finish="satin">Satin</button><button class="finish" data-finish="matte">Matte</button></div></section>
+
+      <section class="section"><div class="section-head"><h3>Wheels</h3><span id="wheelLabel">19 inch</span></div><div class="card-row" id="wheelChoices"></div></section>
+
+      <section class="section"><div class="section-head"><h3>Aero & stance</h3><span>physical geometry</span></div><div class="card-row" id="aeroChoices"></div><div class="slider"><div class="slider-row"><span>Ride height</span><b id="rideValue">0 mm</b></div><input id="rideSlider" type="range" min="-24" max="18" value="0"></div><div class="slider"><div class="slider-row"><span>Track width</span><b id="trackValue">+0 mm</b></div><input id="trackSlider" type="range" min="0" max="30" value="0"></div></section>
+
+      <section class="section"><div class="section-head"><h3>Powertrain</h3><span>drivetrain estimate</span></div><div class="card-row" id="engineChoices"></div></section>
+
+      <section class="section"><div class="section-head"><h3>Lighting</h3><span>visual package</span></div><div class="finish-row"><button class="finish active" data-lights="white">White</button><button class="finish" data-lights="ice">Ice Blue</button><button class="finish" data-lights="amber">Amber</button></div></section>
+
+      <section class="section"><div class="section-head"><h3>Live performance</h3><span>updates instantly</span></div><div class="stats"><div class="stat"><strong id="hp">520</strong><span>HP</span></div><div class="stat"><strong id="torque">610</strong><span>Nm</span></div><div class="stat"><strong id="zero">3.6s</strong><span>0–100</span></div><div class="stat"><strong id="top">301</strong><span>Top km/h</span></div><div class="stat"><strong id="weight">1,470</strong><span>Weight kg</span></div><div class="stat"><strong id="price">$92,400</strong><span>Build value</span></div></div></section>
+
+      <section class="section"><div class="pro-card"><h4>Pro Garage · $20</h4><p>Unlock the V10 and V12 engines, Forged Pro wheels, Widebody and GT Carbon aero packages.</p><div class="pro-bar"><div><div class="pro-price">$20</div><div class="pro-sub">one-time demo unlock</div></div><button class="btn accent" id="unlockBtn">Unlock Pro</button></div><div id="proStatus"></div></div></section>
+    </aside>
+
+    <div class="bottom-bar"><div class="summary"><div class="summary-item"><b id="sumPaint">Rosso</b><span>Paint</span></div><div class="summary-item"><b id="sumWheel">19" Aero Alloy</b><span>Wheels</span></div><div class="summary-item"><b id="sumEngine">Twin-Turbo V6</b><span>Powertrain</span></div><div class="summary-item"><b id="sumAero">Factory Clean</b><span>Aero</span></div></div><div class="price"><b id="sumPrice">$92,400</b><span>Configured value</span></div></div>
+  </main>
+
+  <div class="loading" id="loading"><div class="loader"><strong>LOADING VEHICLE</strong><small>Preparing the real GLB road-car asset…</small><div class="line"><i></i></div></div></div>
+  <div class="toast" id="toast"></div>
+  <div class="modal" id="modal"><div class="dialog"><h2>Unlock Pro Garage</h2><p>This prototype uses a simulated checkout. No payment is processed. Unlocking enables the premium configuration options immediately.</p><input class="field" placeholder="Cardholder name"><input class="field" placeholder="Card number — demo only"><div class="dialog-actions"><button class="btn" id="cancelBtn">Cancel</button><button class="btn accent" id="payBtn">Pay $20</button></div></div></div>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

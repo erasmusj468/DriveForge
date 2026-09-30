@@ -1,0 +1,164 @@
+{
+  "model": {
+    "name": "Apex R",
+    "description": "Mid-engine two-seat sports car",
+    "url": "https://cdn.3dassets.dev/assets/32495/v1/model.glb",
+    "source": "https://3dassets.dev/assets/car-park-and-road-vehicle-fleet-sports-car-900de487",
+    "license": "CC0"
+  },
+  "paints": [
+    {
+      "id": "obsidian",
+      "name": "Obsidian",
+      "hex": "#090b0f",
+      "metallic": 0.84,
+      "roughness": 0.16
+    },
+    {
+      "id": "pearl",
+      "name": "Pearl White",
+      "hex": "#e7e7e2",
+      "metallic": 0.68,
+      "roughness": 0.17
+    },
+    {
+      "id": "rosso",
+      "name": "Rosso",
+      "hex": "#a8121e",
+      "metallic": 0.78,
+      "roughness": 0.15
+    },
+    {
+      "id": "azure",
+      "name": "Azure Blue",
+      "hex": "#205aa3",
+      "metallic": 0.8,
+      "roughness": 0.16
+    },
+    {
+      "id": "graphite",
+      "name": "Graphite",
+      "hex": "#4a5058",
+      "metallic": 0.82,
+      "roughness": 0.19
+    },
+    {
+      "id": "verde",
+      "name": "Verde Racing",
+      "hex": "#315e46",
+      "metallic": 0.76,
+      "roughness": 0.18
+    },
+    {
+      "id": "champagne",
+      "name": "Champagne",
+      "hex": "#c3a37d",
+      "metallic": 0.72,
+      "roughness": 0.18
+    }
+  ],
+  "wheels": [
+    {
+      "id": "oem",
+      "name": "19\" Aero Alloy",
+      "price": 0,
+      "diameter": 19,
+      "finish": "machined"
+    },
+    {
+      "id": "sport",
+      "name": "20\" Sport Mesh",
+      "price": 2100,
+      "diameter": 20,
+      "finish": "satin"
+    },
+    {
+      "id": "forged",
+      "name": "20\" Forged Pro",
+      "price": 4800,
+      "diameter": 20,
+      "finish": "forged",
+      "pro": true
+    },
+    {
+      "id": "deep",
+      "name": "21\" Deep Concave",
+      "price": 6200,
+      "diameter": 21,
+      "finish": "forged",
+      "pro": true
+    }
+  ],
+  "aero": [
+    {
+      "id": "clean",
+      "name": "Factory Clean",
+      "price": 0,
+      "drop": 0
+    },
+    {
+      "id": "sport",
+      "name": "Sport Aero",
+      "price": 3900,
+      "drop": -4
+    },
+    {
+      "id": "wide",
+      "name": "Widebody",
+      "price": 7900,
+      "drop": -8,
+      "pro": true
+    },
+    {
+      "id": "gt",
+      "name": "GT Carbon Pack",
+      "price": 11800,
+      "drop": -10,
+      "pro": true
+    }
+  ],
+  "engines": [
+    {
+      "id": "v6",
+      "name": "Twin-Turbo V6",
+      "hp": 520,
+      "torque": 610,
+      "weight": 0,
+      "price": 0,
+      "zero": 3.6,
+      "top": 301
+    },
+    {
+      "id": "v8",
+      "name": "Naturally Aspirated V8",
+      "hp": 650,
+      "torque": 690,
+      "weight": 45,
+      "price": 10800,
+      "zero": 3.3,
+      "top": 319
+    },
+    {
+      "id": "v10",
+      "name": "High-Rev V10",
+      "hp": 755,
+      "torque": 720,
+      "weight": 68,
+      "price": 19800,
+      "zero": 3.0,
+      "top": 341,
+      "pro": true
+    },
+    {
+      "id": "v12",
+      "name": "6.5L V12",
+      "hp": 890,
+      "torque": 820,
+      "weight": 105,
+      "price": 32000,
+      "zero": 2.7,
+      "top": 361,
+      "pro": true
+    }
+  ]
+}
