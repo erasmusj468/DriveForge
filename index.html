@@ -1,59 +1,59 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="theme-color" content="#080a0d" />
-<title>DriveForge — Build Your Dream Car</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23090b0e'/><path d='M14 37h36l-6 8H20z' fill='%23d9ef71'/><path d='M20 35l4-10h17l6 10' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/></svg>">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080a0d">
+<title>DriveForge — Vehicle Studio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23080a0d'/%3E%3Cpath d='M12 38 24 12h11l-7 16h22l-11 24H28l7-14H12Z' fill='%23e92b2b'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div id="app">
-<section id="landing" class="landing">
-  <div class="landing-noise"></div>
-  <header class="landing-header"><div class="wordmark"><span class="mark">DF</span><div><strong>DRIVEFORGE</strong><small>VEHICLE STUDIO</small></div></div><div class="landing-meta">REAL-TIME VEHICLE CONFIGURATION <span>•</span> 2026</div></header>
-  <div class="landing-inner">
-    <div class="landing-copy">
-      <div class="eyebrow">THE DIGITAL GARAGE</div>
-      <h1>Build a car<br><i>worth staring at.</i></h1>
-      <p>Choose a real-world model profile, reshape the exterior, tune the powertrain and finish every surface. Or start with a blank architecture and make your own machine.</p>
-      <div class="launch-cards">
-        <button class="launch-card" data-start="garage"><span class="launch-index">01</span><span class="launch-text"><b>CONFIGURE A PRODUCTION CAR</b><small>BMW · Dodge · Ford · Porsche · Toyota · Ferrari and more</small></span><span class="launch-arrow">↗</span></button>
-        <button class="launch-card" data-start="scratch"><span class="launch-index">02</span><span class="launch-text"><b>BUILD FROM SCRATCH</b><small>Choose proportions, stance, face, aero and power from the ground up</small></span><span class="launch-arrow">↗</span></button>
-      </div>
-      <div class="landing-proof"><span>20+ MODEL PROFILES</span><span>LIVE 3D VIEWER</span><span>FORMULA-BASED PERFORMANCE</span><span>PRO GARAGE / $20 DEMO</span></div>
-    </div>
-    <div class="landing-hero"><div class="hero-orbit"><div class="hero-car-shape"><div class="hero-light"></div><div class="hero-glass"></div><div class="hero-wheel w1"></div><div class="hero-wheel w2"></div></div></div></div>
+<div class="app">
+<header class="topbar">
+  <div class="logo"><div class="logo-mark">DF</div><div><b>DRIVEFORGE</b><small>BUILD · CUSTOMIZE · DRIVE</small></div></div>
+  <nav class="nav"><button class="active" data-home>Home</button><button data-garage>Garage</button><button data-build>Build</button><button data-catalog>Catalog</button></nav>
+  <div class="top-actions"><button class="ghost" id="savedBtn">Saved</button><button class="premium" id="premiumBtn">♛ Pro Garage · $20</button></div>
+</header>
+
+<main id="homeView">
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">THE ULTIMATE CAR CONFIGURATOR</div>
+    <h1>YOUR DREAM CAR.<br><span>BUILT BY YOU.</span></h1>
+    <p>Choose from real-world vehicle profiles, customize the details that matter, and build a machine around your taste. From daily drivers to supercars.</p>
+    <div class="hero-cta"><button class="primary" id="heroBuild">START BUILDING →</button><button class="ghost" id="heroGarage">EXPLORE GARAGE</button></div>
+    <div class="metrics"><div class="metric"><strong>24</strong><small>VEHICLE PROFILES</small></div><div class="metric"><strong>3D</strong><small>LIVE VIEWER</small></div><div class="metric"><strong>100+</strong><small>CONFIGURATIONS</small></div><div class="metric"><strong>$20</strong><small>PRO GARAGE</small></div></div>
   </div>
 </section>
-<section id="garage" class="garage hidden">
-  <header class="garage-header"><div class="wordmark"><span class="mark">DF</span><div><strong>DRIVEFORGE</strong><small>VEHICLE STUDIO</small></div></div><button id="backLanding" class="ghost-btn">← BACK</button></header>
-  <div class="garage-title"><div><div class="eyebrow">01 / MODEL SELECTOR</div><h2>Choose your starting point.</h2><p>Real-world model profiles. Original DriveForge 3D reference bodies.</p></div><div class="garage-tools"><input id="search" type="search" placeholder="Search BMW, Charger, 911..." /><button class="brand-chip active" data-brand="ALL">ALL</button></div></div>
-  <div id="brandBar" class="brand-bar"></div>
-  <div id="carGrid" class="car-grid"></div>
+<section class="section" id="garageSection">
+  <div class="section-head"><div><h2>Select a car</h2><p>Real-world models. DriveForge visualization. Your build.</p></div><label class="search"><span>⌕</span><input id="searchInput" placeholder="Search BMW, Dodge, Supra…"></label></div>
+  <div class="brand-row" id="brandRow"></div>
+  <div class="garage-grid" id="garageGrid"></div>
 </section>
-<section id="studio" class="studio hidden">
-  <header class="topbar"><div class="wordmark"><span class="mark">DF</span><div><strong>DRIVEFORGE</strong><small>VEHICLE STUDIO</small></div></div><div class="mode-switch"><button id="studioGarage" class="active">GARAGE</button><button id="studioScratch">FROM SCRATCH</button></div><div class="top-actions"><button id="resetBtn" class="ghost-btn">RESET</button><button id="saveBtn" class="solid-btn">SAVE SPEC</button></div></header>
-  <main class="studio-main">
-    <section class="viewer-panel">
-      <div class="viewer-head"><div><span class="eyebrow">LIVE VEHICLE</span><h2 id="viewerName">BMW M3 Competition xDrive</h2><p id="viewerSub">Performance sedan · original 3D reference body</p></div><div class="viewer-status"><span class="status-dot"></span><span id="viewerStatus">READY</span></div></div>
-      <div id="stage" class="stage"></div>
-      <div class="viewer-controls"><button class="view-btn active" data-view="hero">3/4</button><button class="view-btn" data-view="front">FRONT</button><button class="view-btn" data-view="side">SIDE</button><button class="view-btn" data-view="rear">REAR</button><button class="view-btn" data-view="interior">INTERIOR</button><span class="drag-tip">DRAG TO ORBIT · SCROLL TO ZOOM</span></div>
-      <div class="viewer-bottom"><div><span class="mini-label">REFERENCE</span><strong id="modelReference">BMW M3</strong></div><div><span class="mini-label">BUILD VALUE</span><strong id="priceLarge">$82,800</strong></div></div>
-    </section>
-    <aside class="builder-panel">
-      <div class="builder-head"><div><span class="eyebrow">YOUR BUILD</span><h1 id="buildTitle">BMW M3 Competition xDrive</h1></div><span id="proPill" class="pro-pill">FREE</span></div>
-      <div class="tabs" id="tabs"><button class="active" data-tab="model">MODEL</button><button data-tab="exterior">EXTERIOR</button><button data-tab="wheels">WHEELS</button><button data-tab="interior">INTERIOR</button><button data-tab="power">POWER</button><button data-tab="chassis">CHASSIS</button><button data-tab="summary">SPEC</button></div>
-      <div id="config" class="config"></div>
-      <div class="perf-bar"><div><span>HORSEPOWER</span><b id="hp">523</b></div><div><span>TORQUE</span><b id="torque">650</b></div><div><span>0–100</span><b id="zero">3.4</b></div><div><span>TOP SPEED</span><b id="top">290</b></div><div><span>WEIGHT</span><b id="weight">1,780</b></div></div>
-    </aside>
-  </main>
+</main>
+
+<section id="studioView" class="studio hidden">
+  <div class="viewer">
+    <div class="viewer-bg"></div><div class="viewer-grid"></div>
+    <div class="viewer-car" id="viewerCar"><div class="body"></div><div class="hood"></div><div class="roof"></div><div class="windshield"></div><div class="sideglass"></div><div class="wheel w1"></div><div class="wheel w2"></div><div class="frontlamp"></div><div class="rear"></div><div class="grille"></div><div class="spoiler"></div></div>
+    <div class="viewer-footer"><div class="viewer-title"><b id="viewerName">BMW M3 Competition xDrive</b><span id="viewerMeta">2026 · Sedan · AWD</span></div><div class="camera-row"><button class="active" data-view="front">Front</button><button data-view="rear">Rear</button><button data-view="side">Side</button><button data-view="interior">Interior</button></div></div>
+  </div>
+  <aside class="panel">
+    <div class="panel-head"><small>YOUR BUILD</small><h2 id="buildTitle">BMW M3 Competition xDrive</h2><p id="buildSubtitle">Performance sedan · Reference visualization</p></div>
+    <div class="panel-tabs" id="panelTabs"><button class="active" data-tab="vehicle">Vehicle</button><button data-tab="paint">Paint</button><button data-tab="wheels">Wheels</button><button data-tab="body">Body</button><button data-tab="power">Power</button><button data-tab="interior">Interior</button></div>
+    <div class="panel-body" id="panelBody"></div>
+    <div class="statbar"><div class="stat"><strong id="statHp">523</strong><span>HP</span></div><div class="stat"><strong id="statZero">3.4</strong><span>0–100</span></div><div class="stat"><strong id="statTop">290</strong><span>KM/H</span></div></div>
+    <div class="buildbar"><div><small>BUILD PRICE</small><strong id="buildPrice">$88,600</strong></div><button class="primary" id="saveBuildBtn">SAVE BUILD</button></div>
+  </aside>
 </section>
-<div id="premiumModal" class="modal hidden"><div class="modal-card"><button id="closePremium" class="modal-x">×</button><div class="eyebrow">DRIVEFORGE PRO GARAGE</div><h3>Unlock the full build.</h3><p>One fictional $20 demo upgrade unlocks V10/V12/hybrid power, forged carbon wheels, widebody and track programs, premium interiors and advanced aero.</p><div class="premium-price"><span>ONE-TIME DEMO</span><strong>$20</strong></div><button id="unlockPremium" class="solid-btn wide">UNLOCK PRO GARAGE</button><small>Demo only — no real payment is processed.</small></div></div>
-<div id="toast" class="toast"></div>
+
+<div id="modeScreen" class="mode-screen hidden"><div class="mode-wrap"><div class="eyebrow">DRIVEFORGE · VEHICLE STUDIO</div><h1>HOW DO YOU<br><span>WANT TO BUILD?</span></h1><div class="mode-cards"><button class="mode-card" data-start-mode="customize"><span class="n">01</span><h2>Customize an existing car</h2><p>Pick from BMW, Dodge, Ford, Toyota, Porsche, Chevrolet, Nissan, Mercedes-AMG, Audi and more.</p><span class="arrow">→</span></button><button class="mode-card" data-start-mode="scratch"><span class="n">02</span><h2>Build from scratch</h2><p>Start with the architecture, proportions, powertrain and attitude — then create your own machine.</p><span class="arrow">→</span></button></div><div class="tiny">REAL-WORLD INSPIRED · LIVE BUILD LOGIC · DEMO PREMIUM SYSTEM</div></div></div>
+
+<div id="premiumModal" class="modal hidden"><div class="modal-card"><button class="modal-close" id="closePremium">×</button><div class="eyebrow">DRIVEFORGE PREMIUM</div><h3>Unlock Pro Garage</h3><p>Unlock V10 and V12 engines, exclusive body programs, forged wheels, carbon interiors, race aero and special finishes.</p><div class="modal-price"><span>ONE-TIME DEMO UPGRADE</span><strong>$20</strong></div><button class="primary" id="unlockPremium" style="width:100%">UNLOCK PREMIUM</button><div class="tiny">Demo only. No real payment is processed.</div></div></div>
+<div id="toast" class="hidden" style="position:fixed;left:50%;bottom:25px;transform:translateX(-50%);background:#141a20;border:1px solid #343e48;border-radius:10px;padding:12px 16px;z-index:80;font-size:11px;box-shadow:0 18px 45px rgba(0,0,0,.35)"></div>
 </div>
-<script type="module" src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

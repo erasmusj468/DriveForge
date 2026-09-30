@@ -1,21 +1,18 @@
-# DriveForge Vehicle Studio — Rebuild
+# DriveForge Vehicle Studio
 
-A from-scratch vanilla HTML/CSS/JavaScript + Three.js configurator.
+A premium automotive configurator concept rebuilt from scratch.
 
-## Run locally
+## Included
+- Realistic generated landing hero image
+- Clickable Garage with 24 real-world model profiles
+- Functional vehicle selection that changes the active car, stats, price and 3D-style scene
+- Paint, finish, wheels, bodykit, powertrain, drivetrain and interior options
+- $20 demo Pro Garage unlock
+- Save Build JSON export
+- Responsive premium automotive UI
 
-```bash
-python -m http.server 8000
-```
+## Run
+Open `index.html` in a modern browser. The main UI works without a local server; Three.js is loaded from jsDelivr for future WebGL extensions.
 
-Then open `http://localhost:8000`.
-
-## Generate catalog
-
-```bash
-python tools/generate_catalog.py
-```
-
-The project intentionally avoids remote GLB dependencies for the main vehicle visuals. Each catalog model maps to a different original procedural 3D reference body profile, so selecting a model visibly changes the vehicle and cannot get stuck on a single default GLB.
-
-Real-world model names/specification profiles are used for reference. The 3D geometry is original and is not an OEM manufacturer asset.
+## Note
+Real-world model names are used as reference profiles. Vehicle visuals are DriveForge original visualization geometry and the landing hero is a generated concept image, not a licensed OEM product image.

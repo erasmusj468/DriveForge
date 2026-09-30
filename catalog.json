@@ -1,0 +1,40 @@
+{
+  "vehicles": [
+    {
+      "brand": "BMW",
+      "name": "M3 Competition xDrive",
+      "category": "Sedan",
+      "hp": 523
+    },
+    {
+      "brand": "Dodge",
+      "name": "Charger Scat Pack",
+      "category": "Muscle Sedan",
+      "hp": 550
+    },
+    {
+      "brand": "Ford",
+      "name": "Mustang GT",
+      "category": "Muscle Coupe",
+      "hp": 486
+    },
+    {
+      "brand": "Toyota",
+      "name": "GR Supra 3.0",
+      "category": "Sports Coupe",
+      "hp": 382
+    },
+    {
+      "brand": "Porsche",
+      "name": "911 Carrera",
+      "category": "Sports Coupe",
+      "hp": 388
+    },
+    {
+      "brand": "Chevrolet",
+      "name": "Corvette Stingray",
+      "category": "Supercar",
+      "hp": 495
+    }
+  ]
+}
