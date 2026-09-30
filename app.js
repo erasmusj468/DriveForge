@@ -1,15 +1,14 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
 import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/GLTFLoader.js';
-import {EffectComposer} from 'https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/postprocessing/EffectComposer.js';
-import {RenderPass} from 'https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/postprocessing/RenderPass.js';
-import {UnrealBloomPass} from 'https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/postprocessing/UnrealBloomPass.js';
-import {OutputPass} from 'https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/postprocessing/OutputPass.js';
 
 const $ = (s)=>document.querySelector(s);
 let catalog;
 let scene, camera, renderer, composer, controls, clock;
 let carRoot=null, extras=null, mixer=null, currentVehicle=null;
+const modelCache=new Map();
+const modelPromises=new Map();
+const loader=new GLTFLoader();
 let baseScale=1, baseCenter=new THREE.Vector3();
 let wheelOriginals=[];
 let activeTab='vehicle';
@@ -18,14 +17,33 @@ const state={
  mode:'customize',vehicle:'coupe',paint:'crimson',wheel:'split5',body:'sport',interior:'black',engine:'v6',drivetrain:'rwd',transmission:'dct',brakes:'bigsteel',aero:'active',ride:0,track:0,width:0,length:0,front:0,rear:0,lights:true,exhaust:true,pro:false,name:'Aster GT'
 };
 
-fetch('data.json').then(r=>{if(!r.ok)throw new Error('catalog fetch failed');return r.json()}).then(d=>{catalog=d;boot()}).catch(()=>{catalog=window.DF_CATALOG;if(catalog){boot()}else{$('#loadStatus').textContent='Catalog failed to load.'}});
+const inlineCatalog=(()=>{try{return JSON.parse($('#dfCatalog')?.textContent||'null')}catch{return null}})();
+if(inlineCatalog){catalog=inlineCatalog;boot()}else{fetch('data.json').then(r=>{if(!r.ok)throw new Error('catalog fetch failed');return r.json()}).then(d=>{catalog=d;boot()}).catch(()=>{catalog=window.DF_CATALOG;if(catalog){boot()}else{$('#loadStatus').textContent='Catalog failed to load.'}})}
 
 function boot(){
   setupLanding();
   setupScene();
   setupGlobalUI();
   renderConfig();
-  loadVehicle();
+  // Start loading the default production model while the landing screen is still visible.
+  schedulePrefetch(state.vehicle);
+}
+
+function schedulePrefetch(id){
+  const run=()=>{loadModel(catalog.vehicles.find(v=>v.id===id), false).catch(()=>{})};
+  if('requestIdleCallback' in window) requestIdleCallback(run,{timeout:1200}); else setTimeout(run,350);
+}
+
+function loadModel(v,showProgress=true){
+  if(!v) return Promise.reject(new Error('Missing vehicle'));
+  if(modelCache.has(v.id)) return Promise.resolve(modelCache.get(v.id));
+  if(modelPromises.has(v.id)) return modelPromises.get(v.id);
+  const promise=new Promise((resolve,reject)=>{
+    loader.load(v.url, gltf=>{modelCache.set(v.id,gltf);modelPromises.delete(v.id);resolve(gltf)}, xhr=>{
+      if(showProgress && xhr.total){const pct=Math.round((xhr.loaded/xhr.total)*100);$('#loadStatus').textContent=`Loading ${v.name} · ${pct}%`}}, err=>{modelPromises.delete(v.id);reject(err)});
+  });
+  modelPromises.set(v.id,promise);
+  return promise;
 }
 
 function setupLanding(){
@@ -64,15 +82,14 @@ function setupScene(){
 
   controls=new OrbitControls(camera,renderer.domElement); controls.enableDamping=true; controls.dampingFactor=.08; controls.minDistance=3.2; controls.maxDistance=15; controls.target.set(0,.85,0); controls.enablePan=false;
   clock=new THREE.Clock();
-  composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));composer.addPass(new UnrealBloomPass(new THREE.Vector2(1,1),.09,.6,.92));composer.addPass(new OutputPass());
   window.addEventListener('resize',onResize);
   renderer.domElement.addEventListener('dblclick',centerCar);
   animate();
 }
 
-function onResize(){const host=$('#stage');camera.aspect=host.clientWidth/host.clientHeight;camera.updateProjectionMatrix();renderer.setSize(host.clientWidth,host.clientHeight,false);composer.setSize(host.clientWidth,host.clientHeight)}
+function onResize(){const host=$('#stage');camera.aspect=host.clientWidth/host.clientHeight;camera.updateProjectionMatrix();renderer.setSize(host.clientWidth,host.clientHeight,false)}
 function centerCar(){setCamera('hero',true)}
-function animate(){requestAnimationFrame(animate);const dt=clock.getDelta();mixer?.update(dt);controls.update();composer.render()}
+function animate(){requestAnimationFrame(animate);const dt=clock.getDelta();mixer?.update(dt);controls.update();renderer.render(scene,camera)}
 
 function setupGlobalUI(){
   $('#modeCustomize').onclick=()=>switchMode('customize'); $('#modeScratch').onclick=()=>switchMode('scratch');
@@ -159,12 +176,12 @@ function handleChoice(b){const id=b.dataset.opt; if(b.dataset.locked){openPremiu
 
 async function loadVehicle(){
   const v=catalog.vehicles.find(x=>x.id===state.vehicle);if(!v)return;
-  $('#loading').classList.remove('hidden');$('#loadStatus').textContent=`Loading ${v.name} from the 3D asset library…`;
-  if(carRoot){scene.remove(carRoot);carRoot.traverse(o=>{o.geometry?.dispose?.();if(Array.isArray(o.material))o.material.forEach(m=>m.dispose?.());else o.material?.dispose?.()})};
+  $('#loading').classList.remove('hidden');$('#loadStatus').textContent=`Preparing ${v.name}…`;
+  if(carRoot){scene.remove(carRoot)};
   extras=null;mixer=null;wheelOriginals=[];
-  const loader=new GLTFLoader();
   try{
-    const gltf=await loader.loadAsync(v.url);carRoot=gltf.scene;currentVehicle=v;scene.add(carRoot);
+    const gltf=await loadModel(v,true);
+    carRoot=gltf.scene;currentVehicle=v;scene.add(carRoot);
     carRoot.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;if(o.material){const mats=Array.isArray(o.material)?o.material:[o.material];mats.forEach(m=>{if('roughness'in m)m.roughness=Math.min(m.roughness+.03,.9);if('metalness'in m)m.metalness=Math.max(m.metalness,.05)})}}});
     mixer=gltf.animations?.length?new THREE.AnimationMixer(carRoot):null;
     if(gltf.animations?.length){const idle=gltf.animations.find(a=>/wheel-roll/i.test(a.name))||gltf.animations[0];mixer.clipAction(idle).play()}
