@@ -1,22 +1,28 @@
-# DriveForge Realistic 3D Car Configurator
+# DriveForge Vehicle Studio
 
-A browser-based car configurator using HTML/CSS/JavaScript, Three.js/WebGL and a Python build-time data generator.
-
-## Realism approach
-- Real GLB road-car asset from 3DAssets.dev, released as CC0.
-- Three.js PBR materials, environment lighting, shadows, reflections and tone mapping.
-- Live paint/finish/wheel/stance/aero/light changes.
-- Named wheel and door/bonnet animation pivots from the vehicle asset.
+A browser-based automotive configurator using HTML/CSS/JavaScript, Three.js/WebGL, GLB vehicle assets, and Python-generated catalog data.
 
 ## Run
-Serve the folder from a web server (for example Vercel, GitHub Pages, or `python -m http.server 8000`).
 
-The model is loaded from the public GLB URL listed in `data.json`, so an internet connection is required for the 3D asset.
+Serve this directory from a local web server (GLB loading uses browser modules and fetches models from a CORS-enabled CDN):
 
-## Python
-`tools/generate_catalog.py` creates `data.json` from the configuration source. Edit the Python source, run it, and the browser app reads the generated catalog.
+```bash
+python -m http.server 8080
+```
 
-## Asset credit
-Model: “Mid-engine sports car (Car Park and Road Vehicle Fleet)” from 3DAssets.dev
-Asset page: https://3dassets.dev/assets/car-park-and-road-vehicle-fleet-sports-car-900de487
-License: CC0
+Then open `http://localhost:8080`.
+
+## Included
+
+- Production-style vehicle chooser: sedan, coupe, hatchback, wagon, SUVs, roadster and supercar.
+- Interactive 3D GLB models with orbit, zoom and camera presets.
+- Live paint / glass / rubber / interior material changes.
+- Wheels, brakes, ride height, track width, aero and body-kit overlays.
+- Engine, drivetrain and transmission selector with formula-based performance estimates.
+- Build-from-scratch mode that modifies body proportions around real 3D vehicle geometry.
+- Save-build JSON export.
+- Fictional $20 Pro Garage demo unlock; no real payment processing.
+
+## Asset licensing
+
+Vehicle models are sourced from the Road Car Showroom Lineup on 3DAssets.dev. The pack is described by its publisher as original, manufacturer-neutral vehicle silhouettes released under CC0 1.0 and usable directly with Three.js GLTFLoader. The app only uses the remote CDN URLs in `data.json`; it does not claim affiliation with any automaker.

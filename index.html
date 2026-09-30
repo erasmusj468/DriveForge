@@ -2,49 +2,82 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DriveForge — 3D Car Configurator</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080a0d">
+<title>DriveForge — Vehicle Studio</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="app">
-  <header class="topbar">
-    <div class="brand"><div class="mark"></div><div><h1>DRIVEFORGE</h1><p>3D vehicle configurator</p></div></div>
-    <div class="top-actions"><button class="btn" id="resetBtn">Reset build</button><button class="btn accent" id="saveBtn">Save build</button></div>
-  </header>
+<div id="app">
+  <section id="startScreen" class="start-screen">
+    <div class="start-background"></div>
+    <div class="start-content">
+      <div class="eyebrow">DRIVEFORGE / VEHICLE STUDIO 01</div>
+      <h1>Build your<br><em>own machine.</em></h1>
+      <p>Configure original, road-car-inspired vehicles in a cinematic 3D studio. Start from a production-style model or shape a custom build.</p>
+      <div class="mode-cards">
+        <button class="mode-card" data-mode="customize">
+          <span class="mode-number">01</span><strong>Customize an existing car</strong><small>Choose a body, paint, wheels, powertrain and finish.</small><span class="mode-arrow">→</span>
+        </button>
+        <button class="mode-card premium-start" data-mode="scratch">
+          <span class="mode-number">02</span><strong>Build from scratch</strong><small>Set the architecture, proportions, face, stance and performance.</small><span class="mode-arrow">→</span>
+        </button>
+      </div>
+      <div class="start-foot"><span>REAL-TIME 3D</span><span>PBR MATERIALS</span><span>LIVE PERFORMANCE MODEL</span><span>DEMO PREMIUM SYSTEM</span></div>
+    </div>
+  </section>
 
-  <main class="viewport">
-    <div id="scene"></div><div class="atmo"></div>
-    <div class="showroom-copy"><div class="eyebrow">LIVE SHOWROOM · WEBGL</div><h2 id="heroName">Apex R</h2><span id="heroMeta">Mid-engine · 2 seats · rear-wheel drive</span></div>
-    <div class="camera" id="cameraTabs"><button class="active" data-cam="hero">3/4</button><button data-cam="front">Front</button><button data-cam="rear">Rear</button><button data-cam="side">Side</button><button data-cam="top">Top</button></div>
-    <div class="viewer-tools"><button class="tool-btn" id="rotateBtn" title="Auto rotate">↻</button><button class="tool-btn" id="doorBtn" title="Open doors">🚪</button><button class="tool-btn" id="hoodBtn" title="Open bonnet">▱</button></div>
+  <div id="studio" class="studio hidden">
+    <header class="topbar">
+      <div class="brand"><div class="brand-icon">DF</div><div><b>DRIVEFORGE</b><span>VEHICLE STUDIO</span></div></div>
+      <div class="mode-switch"><button id="modeCustomize" class="selected">CUSTOMIZE</button><button id="modeScratch">BUILD FROM SCRATCH</button></div>
+      <div class="top-actions"><button id="resetBtn" class="text-btn">RESET</button><button id="saveBtn" class="solid-btn">SAVE BUILD</button></div>
+    </header>
 
-    <aside class="sidebar">
-      <section class="section"><div class="section-head"><h3>Build preset</h3><span>same real 3D shell</span></div><div class="card-row" id="presetChoices"></div></section>
+    <main class="main-grid">
+      <section class="stage-wrap">
+        <div class="stage-toolbar top-left"><div class="tiny-label">LIVE CONFIGURATOR</div><div id="assetLabel" class="asset-label">REMOTE GLB / PBR</div></div>
+        <div id="stage"></div>
+        <div id="loading" class="loading"><div class="spinner"></div><div><strong>LOADING VEHICLE</strong><span id="loadStatus">Preparing the 3D studio…</span></div></div>
+        <div class="view-controls">
+          <button data-camera="hero" class="active">3/4</button><button data-camera="front">FRONT</button><button data-camera="rear">REAR</button><button data-camera="side">SIDE</button><button data-camera="interior">INTERIOR</button>
+        </div>
+        <div class="stage-footer"><div><b id="viewerName">Aster GT</b><span id="viewerTag">Grand touring</span></div><div class="stage-hint">DRAG TO ORBIT · SCROLL TO ZOOM · DOUBLE CLICK TO CENTER</div></div>
+      </section>
 
-      <section class="section"><div class="section-head"><h3>Paint</h3><span>PBR clearcoat</span></div><div class="swatches" id="paintChoices"></div><div class="finish-row"><button class="finish active" data-finish="gloss">Gloss</button><button class="finish" data-finish="satin">Satin</button><button class="finish" data-finish="matte">Matte</button></div></section>
+      <aside class="builder-panel">
+        <div class="builder-head"><div><span class="eyebrow small">YOUR BUILD</span><h2 id="buildName">Aster GT</h2></div><div class="pro-badge" id="proBadge">PRO OFF</div></div>
+        <div class="progress-row"><div class="progress-track"><i id="progressBar"></i></div><span id="progressText">4 / 16</span></div>
 
-      <section class="section"><div class="section-head"><h3>Wheels</h3><span id="wheelLabel">19 inch</span></div><div class="card-row" id="wheelChoices"></div></section>
+        <nav class="tabs" id="tabs">
+          <button class="active" data-tab="vehicle">Vehicle</button><button data-tab="exterior">Exterior</button><button data-tab="wheels">Wheels</button><button data-tab="interior">Interior</button><button data-tab="power">Powertrain</button><button data-tab="chassis">Chassis</button><button data-tab="details">Details</button>
+        </nav>
+        <div id="config" class="config-area"></div>
 
-      <section class="section"><div class="section-head"><h3>Aero & stance</h3><span>physical geometry</span></div><div class="card-row" id="aeroChoices"></div><div class="slider"><div class="slider-row"><span>Ride height</span><b id="rideValue">0 mm</b></div><input id="rideSlider" type="range" min="-24" max="18" value="0"></div><div class="slider"><div class="slider-row"><span>Track width</span><b id="trackValue">+0 mm</b></div><input id="trackSlider" type="range" min="0" max="30" value="0"></div></section>
+        <section class="summary-panel">
+          <div class="summary-top"><span>BUILD VALUE</span><strong id="price">$68,900</strong></div>
+          <div class="stats-grid">
+            <div><strong id="hp">380</strong><span>HP</span></div><div><strong id="torque">500</strong><span>NM</span></div><div><strong id="zero">4.8</strong><span>0–100</span></div><div><strong id="top">270</strong><span>KM/H</span></div><div><strong id="weight">1,490</strong><span>KG</span></div><div><strong id="pwr">255</strong><span>HP/TON</span></div>
+          </div>
+          <div class="summary-line"><span id="driveLabel">RWD · 8-SPEED DCT</span><span id="engineLabel">V6 TWIN-TURBO</span></div>
+        </section>
+      </aside>
+    </main>
 
-      <section class="section"><div class="section-head"><h3>Powertrain</h3><span>drivetrain estimate</span></div><div class="card-row" id="engineChoices"></div></section>
-
-      <section class="section"><div class="section-head"><h3>Lighting</h3><span>visual package</span></div><div class="finish-row"><button class="finish active" data-lights="white">White</button><button class="finish" data-lights="ice">Ice Blue</button><button class="finish" data-lights="amber">Amber</button></div></section>
-
-      <section class="section"><div class="section-head"><h3>Live performance</h3><span>updates instantly</span></div><div class="stats"><div class="stat"><strong id="hp">520</strong><span>HP</span></div><div class="stat"><strong id="torque">610</strong><span>Nm</span></div><div class="stat"><strong id="zero">3.6s</strong><span>0–100</span></div><div class="stat"><strong id="top">301</strong><span>Top km/h</span></div><div class="stat"><strong id="weight">1,470</strong><span>Weight kg</span></div><div class="stat"><strong id="price">$92,400</strong><span>Build value</span></div></div></section>
-
-      <section class="section"><div class="pro-card"><h4>Pro Garage · $20</h4><p>Unlock the V10 and V12 engines, Forged Pro wheels, Widebody and GT Carbon aero packages.</p><div class="pro-bar"><div><div class="pro-price">$20</div><div class="pro-sub">one-time demo unlock</div></div><button class="btn accent" id="unlockBtn">Unlock Pro</button></div><div id="proStatus"></div></div></section>
-    </aside>
-
-    <div class="bottom-bar"><div class="summary"><div class="summary-item"><b id="sumPaint">Rosso</b><span>Paint</span></div><div class="summary-item"><b id="sumWheel">19" Aero Alloy</b><span>Wheels</span></div><div class="summary-item"><b id="sumEngine">Twin-Turbo V6</b><span>Powertrain</span></div><div class="summary-item"><b id="sumAero">Factory Clean</b><span>Aero</span></div></div><div class="price"><b id="sumPrice">$92,400</b><span>Configured value</span></div></div>
-  </main>
-
-  <div class="loading" id="loading"><div class="loader"><strong>LOADING VEHICLE</strong><small>Preparing the real GLB road-car asset…</small><div class="line"><i></i></div></div></div>
-  <div class="toast" id="toast"></div>
-  <div class="modal" id="modal"><div class="dialog"><h2>Unlock Pro Garage</h2><p>This prototype uses a simulated checkout. No payment is processed. Unlocking enables the premium configuration options immediately.</p><input class="field" placeholder="Cardholder name"><input class="field" placeholder="Card number — demo only"><div class="dialog-actions"><button class="btn" id="cancelBtn">Cancel</button><button class="btn accent" id="payBtn">Pay $20</button></div></div></div>
+    <div id="toast" class="toast"></div>
+    <div id="modal" class="modal hidden">
+      <div class="modal-card">
+        <button class="modal-close" id="closeModal">×</button>
+        <div class="eyebrow small">DRIVEFORGE PREMIUM</div><h3>Unlock the Pro Garage</h3>
+        <p>One fictional $20 upgrade unlocks the advanced engine catalog, exclusive aero, forged wheel packages, carbon interiors and premium body programs.</p>
+        <div class="premium-price"><span>ONE-TIME DEMO UNLOCK</span><strong>$20</strong></div>
+        <button id="unlockPro" class="solid-btn wide">UNLOCK PREMIUM</button>
+        <small class="modal-note">Demo only. No real payment is processed.</small>
+      </div>
+    </div>
+  </div>
 </div>
-
 <script type="module" src="app.js"></script>
 </body>
 </html>

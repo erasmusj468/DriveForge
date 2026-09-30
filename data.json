@@ -1,163 +1,502 @@
 {
-  "model": {
-    "name": "Apex R",
-    "description": "Mid-engine two-seat sports car",
-    "url": "https://cdn.3dassets.dev/assets/32495/v1/model.glb",
-    "source": "https://3dassets.dev/assets/car-park-and-road-vehicle-fleet-sports-car-900de487",
-    "license": "CC0"
-  },
+  "vehicles": [
+    {
+      "id": "sedan",
+      "name": "Aster S4",
+      "category": "Sedan",
+      "tag": "executive sport",
+      "basePrice": 54900,
+      "weight": 1580,
+      "hp": 310,
+      "torque": 420,
+      "zero": 5.3,
+      "top": 250,
+      "url": "https://cdn.3dassets.dev/assets/15104/v1/model.glb",
+      "source": "Contemporary saloon \u00b7 3DAssets.dev"
+    },
+    {
+      "id": "coupe",
+      "name": "Aster GT",
+      "category": "Coupe",
+      "tag": "grand touring",
+      "basePrice": 68900,
+      "weight": 1490,
+      "hp": 380,
+      "torque": 500,
+      "zero": 4.8,
+      "top": 270,
+      "url": "https://cdn.3dassets.dev/assets/15108/v1/model.glb",
+      "source": "Grand touring coupe \u00b7 3DAssets.dev"
+    },
+    {
+      "id": "hatch",
+      "name": "Aster R5",
+      "category": "Hatchback",
+      "tag": "hot hatch",
+      "basePrice": 42900,
+      "weight": 1370,
+      "hp": 280,
+      "torque": 390,
+      "zero": 5.2,
+      "top": 245,
+      "url": "https://cdn.3dassets.dev/assets/15109/v1/model.glb",
+      "source": "Five-door hatchback \u00b7 3DAssets.dev"
+    },
+    {
+      "id": "estate",
+      "name": "Aster Tour",
+      "category": "Wagon",
+      "tag": "sport estate",
+      "basePrice": 49900,
+      "weight": 1510,
+      "hp": 320,
+      "torque": 450,
+      "zero": 5.0,
+      "top": 252,
+      "url": "https://cdn.3dassets.dev/assets/15103/v1/model.glb",
+      "source": "Long-roof estate \u00b7 3DAssets.dev"
+    },
+    {
+      "id": "crossover",
+      "name": "Aster XR",
+      "category": "SUV",
+      "tag": "performance crossover",
+      "basePrice": 61900,
+      "weight": 1780,
+      "hp": 360,
+      "torque": 520,
+      "zero": 5.5,
+      "top": 240,
+      "url": "https://cdn.3dassets.dev/assets/15106/v1/model.glb",
+      "source": "Compact crossover \u00b7 3DAssets.dev"
+    },
+    {
+      "id": "suv",
+      "name": "Aster Atlas",
+      "category": "SUV",
+      "tag": "three-row luxury",
+      "basePrice": 74900,
+      "weight": 2050,
+      "hp": 420,
+      "torque": 600,
+      "zero": 5.9,
+      "top": 235,
+      "url": "https://cdn.3dassets.dev/assets/15110/v1/model.glb",
+      "source": "Large three-row SUV \u00b7 3DAssets.dev"
+    },
+    {
+      "id": "roadster",
+      "name": "Aster RS",
+      "category": "Roadster",
+      "tag": "open-top sports",
+      "basePrice": 72900,
+      "weight": 1320,
+      "hp": 430,
+      "torque": 520,
+      "zero": 4.1,
+      "top": 285,
+      "url": "https://cdn.3dassets.dev/assets/15112/v1/model.glb",
+      "source": "Two-seat roadster \u00b7 3DAssets.dev"
+    },
+    {
+      "id": "supercar",
+      "name": "Aster Veloce",
+      "category": "Supercar",
+      "tag": "mid-engine",
+      "basePrice": 189900,
+      "weight": 1290,
+      "hp": 620,
+      "torque": 610,
+      "zero": 3.0,
+      "top": 335,
+      "url": "https://cdn.3dassets.dev/assets/15113/v1/model.glb",
+      "source": "Mid-engine supercar \u00b7 3DAssets.dev"
+    }
+  ],
   "paints": [
     {
       "id": "obsidian",
-      "name": "Obsidian",
-      "hex": "#090b0f",
-      "metallic": 0.84,
-      "roughness": 0.16
+      "name": "Obsidian Black",
+      "hex": "#0a0c0f",
+      "type": "Metallic",
+      "price": 0
     },
     {
-      "id": "pearl",
-      "name": "Pearl White",
-      "hex": "#e7e7e2",
-      "metallic": 0.68,
-      "roughness": 0.17
+      "id": "arctic",
+      "name": "Arctic Silver",
+      "hex": "#bfc5ca",
+      "type": "Metallic",
+      "price": 650
     },
     {
-      "id": "rosso",
-      "name": "Rosso",
-      "hex": "#a8121e",
-      "metallic": 0.78,
-      "roughness": 0.15
+      "id": "crimson",
+      "name": "Crimson Red",
+      "hex": "#7c101b",
+      "type": "Pearl",
+      "price": 950
     },
     {
-      "id": "azure",
-      "name": "Azure Blue",
-      "hex": "#205aa3",
-      "metallic": 0.8,
-      "roughness": 0.16
-    },
-    {
-      "id": "graphite",
-      "name": "Graphite",
-      "hex": "#4a5058",
-      "metallic": 0.82,
-      "roughness": 0.19
-    },
-    {
-      "id": "verde",
-      "name": "Verde Racing",
-      "hex": "#315e46",
-      "metallic": 0.76,
-      "roughness": 0.18
+      "id": "deepblue",
+      "name": "Deep Ocean",
+      "hex": "#0c2a50",
+      "type": "Metallic",
+      "price": 950
     },
     {
       "id": "champagne",
       "name": "Champagne",
-      "hex": "#c3a37d",
-      "metallic": 0.72,
-      "roughness": 0.18
+      "hex": "#a89170",
+      "type": "Satin",
+      "price": 1250
+    },
+    {
+      "id": "chalk",
+      "name": "Chalk White",
+      "hex": "#e7e5df",
+      "type": "Gloss",
+      "price": 350
+    },
+    {
+      "id": "racinggreen",
+      "name": "Racing Green",
+      "hex": "#0d4a39",
+      "type": "Pearl",
+      "price": 1000
+    },
+    {
+      "id": "nardo",
+      "name": "Stealth Grey",
+      "hex": "#3f4347",
+      "type": "Matte",
+      "price": 1600
     }
   ],
   "wheels": [
     {
       "id": "oem",
-      "name": "19\" Aero Alloy",
+      "name": "20\" Aero",
+      "size": 20,
+      "finish": "Satin alloy",
       "price": 0,
-      "diameter": 19,
-      "finish": "machined"
+      "pro": false
     },
     {
-      "id": "sport",
-      "name": "20\" Sport Mesh",
-      "price": 2100,
-      "diameter": 20,
-      "finish": "satin"
+      "id": "mesh",
+      "name": "21\" Mesh",
+      "size": 21,
+      "finish": "Gunmetal",
+      "price": 1800,
+      "pro": false
+    },
+    {
+      "id": "split5",
+      "name": "21\" Split 5",
+      "size": 21,
+      "finish": "Diamond cut",
+      "price": 2400,
+      "pro": false
     },
     {
       "id": "forged",
-      "name": "20\" Forged Pro",
+      "name": "22\" Forged",
+      "size": 22,
+      "finish": "Brushed titanium",
       "price": 4800,
-      "diameter": 20,
-      "finish": "forged",
       "pro": true
     },
     {
-      "id": "deep",
-      "name": "21\" Deep Concave",
+      "id": "carbon",
+      "name": "22\" Carbon aero",
+      "size": 22,
+      "finish": "Carbon barrel",
       "price": 6200,
-      "diameter": 21,
-      "finish": "forged",
+      "pro": true
+    }
+  ],
+  "bodykits": [
+    {
+      "id": "stock",
+      "name": "Stock",
+      "desc": "Factory form",
+      "price": 0,
+      "pro": false,
+      "drop": 0,
+      "width": 0,
+      "downforce": 0
+    },
+    {
+      "id": "sport",
+      "name": "Sport",
+      "desc": "Subtle aero",
+      "price": 1800,
+      "pro": false,
+      "drop": -5,
+      "width": 12,
+      "downforce": 20
+    },
+    {
+      "id": "street",
+      "name": "Street",
+      "desc": "Lower + wider",
+      "price": 4200,
+      "pro": false,
+      "drop": -12,
+      "width": 28,
+      "downforce": 35
+    },
+    {
+      "id": "wide",
+      "name": "Widebody",
+      "desc": "Fender flares",
+      "price": 7200,
+      "pro": true,
+      "drop": -18,
+      "width": 52,
+      "downforce": 70
+    },
+    {
+      "id": "track",
+      "name": "Track",
+      "desc": "Splitter + wing",
+      "price": 8900,
+      "pro": true,
+      "drop": -24,
+      "width": 38,
+      "downforce": 140
+    },
+    {
+      "id": "luxury",
+      "name": "Luxury",
+      "desc": "Chrome + comfort",
+      "price": 6500,
+      "pro": true,
+      "drop": -4,
+      "width": 10,
+      "downforce": 10
+    }
+  ],
+  "engines": [
+    {
+      "id": "i3",
+      "name": "I3 Turbo",
+      "layout": "Inline-3",
+      "hp": 165,
+      "torque": 250,
+      "weight": 130,
+      "zero": 0.8,
+      "top": -12,
+      "price": 0,
+      "pro": false
+    },
+    {
+      "id": "i4",
+      "name": "I4 Turbo",
+      "layout": "Inline-4",
+      "hp": 280,
+      "torque": 390,
+      "weight": 160,
+      "zero": 0.2,
+      "top": 0,
+      "price": 0,
+      "pro": false
+    },
+    {
+      "id": "i6",
+      "name": "I6 Turbo",
+      "layout": "Inline-6",
+      "hp": 420,
+      "torque": 520,
+      "weight": 205,
+      "zero": -0.1,
+      "top": 8,
+      "price": 6200,
+      "pro": false
+    },
+    {
+      "id": "v6",
+      "name": "V6 Twin-Turbo",
+      "layout": "V6",
+      "hp": 510,
+      "torque": 590,
+      "weight": 220,
+      "zero": -0.3,
+      "top": 14,
+      "price": 8800,
+      "pro": false
+    },
+    {
+      "id": "v8",
+      "name": "V8 Twin-Turbo",
+      "layout": "V8",
+      "hp": 690,
+      "torque": 780,
+      "weight": 275,
+      "zero": -0.6,
+      "top": 22,
+      "price": 14500,
+      "pro": false
+    },
+    {
+      "id": "v10",
+      "name": "V10 Naturally Aspirated",
+      "layout": "V10",
+      "hp": 780,
+      "torque": 720,
+      "weight": 265,
+      "zero": -0.7,
+      "top": 30,
+      "price": 21000,
+      "pro": true
+    },
+    {
+      "id": "v12",
+      "name": "V12 Twin-Turbo",
+      "layout": "V12",
+      "hp": 900,
+      "torque": 950,
+      "weight": 335,
+      "zero": -0.9,
+      "top": 38,
+      "price": 32000,
+      "pro": true
+    },
+    {
+      "id": "electric",
+      "name": "Dual Motor EV",
+      "layout": "Electric",
+      "hp": 610,
+      "torque": 820,
+      "weight": -40,
+      "zero": -1.0,
+      "top": 18,
+      "price": 12000,
+      "pro": false
+    },
+    {
+      "id": "hybrid",
+      "name": "Twin-Turbo Hybrid",
+      "layout": "Hybrid",
+      "hp": 720,
+      "torque": 860,
+      "weight": 100,
+      "zero": -0.75,
+      "top": 28,
+      "price": 19000,
+      "pro": true
+    }
+  ],
+  "drivetrains": [
+    {
+      "id": "fwd",
+      "name": "FWD",
+      "bias": 0,
+      "price": 0
+    },
+    {
+      "id": "rwd",
+      "name": "RWD",
+      "bias": 0.1,
+      "price": 1200
+    },
+    {
+      "id": "awd",
+      "name": "AWD",
+      "bias": 0.2,
+      "price": 3200
+    }
+  ],
+  "transmissions": [
+    {
+      "id": "manual",
+      "name": "6-speed manual",
+      "shift": 0.18,
+      "price": 0
+    },
+    {
+      "id": "dct",
+      "name": "8-speed DCT",
+      "shift": -0.18,
+      "price": 3500
+    },
+    {
+      "id": "auto",
+      "name": "10-speed automatic",
+      "shift": -0.05,
+      "price": 1800
+    }
+  ],
+  "brakes": [
+    {
+      "id": "steel",
+      "name": "Performance steel",
+      "price": 0,
+      "weight": 0
+    },
+    {
+      "id": "bigsteel",
+      "name": "Big brake package",
+      "price": 2500,
+      "weight": 4
+    },
+    {
+      "id": "carbonceramic",
+      "name": "Carbon-ceramic",
+      "price": 8500,
+      "weight": -14,
+      "pro": true
+    }
+  ],
+  "interiors": [
+    {
+      "id": "black",
+      "name": "Black leather",
+      "accent": "#151515",
+      "price": 0
+    },
+    {
+      "id": "tan",
+      "name": "Saddle leather",
+      "accent": "#7a5236",
+      "price": 1200
+    },
+    {
+      "id": "red",
+      "name": "Burgundy leather",
+      "accent": "#5e1821",
+      "price": 1500
+    },
+    {
+      "id": "alcantara",
+      "name": "Alcantara + leather",
+      "accent": "#24272b",
+      "price": 2100
+    },
+    {
+      "id": "carbon",
+      "name": "Carbon + Alcantara",
+      "accent": "#0d0f10",
+      "price": 3900,
       "pro": true
     }
   ],
   "aero": [
     {
       "id": "clean",
-      "name": "Factory Clean",
+      "name": "Clean aero",
       "price": 0,
-      "drop": 0
+      "downforce": 0
     },
     {
-      "id": "sport",
-      "name": "Sport Aero",
-      "price": 3900,
-      "drop": -4
+      "id": "active",
+      "name": "Active aero",
+      "price": 4500,
+      "downforce": 75
     },
     {
-      "id": "wide",
-      "name": "Widebody",
-      "price": 7900,
-      "drop": -8,
-      "pro": true
-    },
-    {
-      "id": "gt",
-      "name": "GT Carbon Pack",
-      "price": 11800,
-      "drop": -10,
-      "pro": true
-    }
-  ],
-  "engines": [
-    {
-      "id": "v6",
-      "name": "Twin-Turbo V6",
-      "hp": 520,
-      "torque": 610,
-      "weight": 0,
-      "price": 0,
-      "zero": 3.6,
-      "top": 301
-    },
-    {
-      "id": "v8",
-      "name": "Naturally Aspirated V8",
-      "hp": 650,
-      "torque": 690,
-      "weight": 45,
-      "price": 10800,
-      "zero": 3.3,
-      "top": 319
-    },
-    {
-      "id": "v10",
-      "name": "High-Rev V10",
-      "hp": 755,
-      "torque": 720,
-      "weight": 68,
-      "price": 19800,
-      "zero": 3.0,
-      "top": 341,
-      "pro": true
-    },
-    {
-      "id": "v12",
-      "name": "6.5L V12",
-      "hp": 890,
-      "torque": 820,
-      "weight": 105,
-      "price": 32000,
-      "zero": 2.7,
-      "top": 361,
+      "id": "race",
+      "name": "Race aero",
+      "price": 9800,
+      "downforce": 180,
       "pro": true
     }
   ]
