@@ -21,7 +21,7 @@ const inlineCatalog=(()=>{try{return JSON.parse($('#dfCatalog')?.textContent||'n
 function activeProfile(){
   if(!catalog) return null;
   const real=catalog.referenceModels?.find(x=>x.id===state.vehicle);
-  if(real){const base=catalog.vehicles.find(x=>x.id===real.base);return base?{...real,url:base.url,visualBaseId:base.id}:real}
+  if(real){const base=catalog.vehicles.find(x=>x.id===real.base);return base?{...real,url:real.visualUrl||base.url,visualBaseId:base.id,visualLabel:real.visualLabel||base.name}:real}
   return catalog.vehicles.find(x=>x.id===state.vehicle)||catalog.referenceModels?.[0]||null;
 }
 function activeVisualBase(profile=activeProfile()){return profile?.visualBaseId||profile?.id||'coupe'}
@@ -141,7 +141,8 @@ function renderVehicleTab(v){
   h+='<div class="real-model-grid" id="realModelGrid">';
   for(const m of models){
     const sel=m.id===state.vehicle?' selected':'';
-    h+=`<button class="real-model-card${sel}" data-real-model="${m.id}" data-brand="${escapeHtml(m.brand)}" data-search="${escapeHtml((m.brand+' '+m.name+' '+m.category).toLowerCase())}"><span class="model-brand">${escapeHtml(m.brand)}</span><strong>${escapeHtml(m.name)}</strong><span class="model-meta">${escapeHtml(m.year)} · ${escapeHtml(m.category)}</span><span class="model-stats"><b>${m.hp} HP</b><b>${m.zero.toFixed(1)} s 0–100</b></span></button>`;
+    const pressed=m.id===state.vehicle?'true':'false';
+    h+=`<button type="button" class="real-model-card${sel}" data-real-model="${m.id}" data-brand="${escapeHtml(m.brand)}" data-search="${escapeHtml((m.brand+' '+m.name+' '+m.category).toLowerCase())}" aria-pressed="${pressed}"><span class="model-top"><span class="model-brand">${escapeHtml(m.brand)}</span>${m.id===state.vehicle?'<span class="selected-mark">SELECTED ✓</span>':''}</span><strong>${escapeHtml(m.name)}</strong><span class="model-meta">${escapeHtml(m.year)} · ${escapeHtml(m.category)}</span><span class="model-stats"><b>${m.hp} HP</b><b>${m.zero.toFixed(1)} s 0–100</b></span><span class="model-choose">${m.id===state.vehicle?'ACTIVE BUILD':'SELECT MODEL'} <span>→</span></span></button>`;
   }
   h+='</div>';
   if(state.mode==='scratch'){
@@ -175,9 +176,30 @@ function toggle(id,label,on,sub){return `<div class="toggle-row"><div><strong>${
 
 function bindDynamic(){
   const area=$('#config');
-  area.querySelectorAll('[data-real-model]').forEach(card=>card.onclick=()=>{
-    const id=card.dataset.realModel; const model=catalog.referenceModels?.find(x=>x.id===id); if(!model)return;
-    state.vehicle=id; state.name=model.brand+' '+model.name; renderConfig(); loadVehicle(); updateAll(); toast(`${model.brand} ${model.name} selected`);
+  const modelSelect=area.querySelector('#realModelGrid');
+  modelSelect?.addEventListener('click',(e)=>{
+    const card=e.target.closest('[data-real-model]');
+    if(!card)return;
+    e.preventDefault();
+    const id=card.dataset.realModel;
+    const model=catalog.referenceModels?.find(x=>x.id===id);
+    if(!model)return;
+    state.vehicle=id;
+    state.name=model.brand+' '+model.name;
+    $('#buildName').textContent=state.name;
+    $('#viewerName').textContent=state.name;
+    document.querySelectorAll('#realModelGrid [data-real-model]').forEach(x=>{
+      const active=x.dataset.realModel===id;
+      x.classList.toggle('selected',active);
+      x.setAttribute('aria-pressed',String(active));
+      const mark=x.querySelector('.selected-mark');
+      const choose=x.querySelector('.model-choose');
+      if(mark) mark.textContent=active?'SELECTED ✓':'';
+      if(choose) choose.innerHTML=active?'ACTIVE BUILD <span>✓</span>':'SELECT MODEL <span>→</span>';
+    });
+    loadVehicle();
+    updateAll();
+    toast(`${model.brand} ${model.name} selected`);
   });
   const search=$('#modelSearch');
   const grid=$('#realModelGrid');
@@ -207,13 +229,15 @@ function handleChoice(b){const id=b.dataset.opt; if(b.dataset.locked){openPremiu
   if(tab==='chassis'){state.aero=id;renderConfig();return}
 }
 
-async function loadVehicle(){
-  const v=activeProfile();if(!v)return; const base=catalog.vehicles.find(x=>x.id===activeVisualBase(v))||v;
+async async function loadVehicle(){
+  const requestedVehicle=state.vehicle;
+  const v=activeProfile();if(!v)return; const base={...v,id:v.id,url:v.url,name:v.name};
   $('#loading').classList.remove('hidden');$('#loadStatus').textContent=`Preparing ${v.name}…`;
   if(carRoot){scene.remove(carRoot)};
   extras=null;mixer=null;wheelOriginals=[];
   try{
     const gltf=await loadModel(base,true);
+    if(state.vehicle!==requestedVehicle)return;
     carRoot=gltf.scene;currentVehicle=v;scene.add(carRoot);
     carRoot.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;if(o.material){const mats=Array.isArray(o.material)?o.material:[o.material];mats.forEach(m=>{if('roughness'in m)m.roughness=Math.min(m.roughness+.03,.9);if('metalness'in m)m.metalness=Math.max(m.metalness,.05)})}}});
     mixer=gltf.animations?.length?new THREE.AnimationMixer(carRoot):null;
@@ -233,8 +257,50 @@ function createAero(){if(!carRoot)return;extras?.traverse(o=>o.geometry?.dispose
  if(['wide','track'].includes(b.id)){for(const x of[-1.12,1.12]){const f=new THREE.Mesh(new THREE.BoxGeometry(.12,.28,1.65),paint);f.position.set(x,.5,-.1);extras.add(f)}}
  if(['track','luxury'].includes(b.id)){const rearBar=new THREE.Mesh(new THREE.BoxGeometry(1.85,.08,.2),carbon);rearBar.position.set(0,1.15,zRear);extras.add(rearBar);for(const x of[-.55,.55]){const st=new THREE.Mesh(new THREE.BoxGeometry(.055,.32,.055),carbon);st.position.set(x,1.0,zRear);extras.add(st)}}
  if(a.downforce>0 && !['track'].includes(b.id)){const rear=new THREE.Mesh(new THREE.BoxGeometry(1.65,.06,.14),carbon);rear.position.set(0,.99,zRear+.05);extras.add(rear)}
+ createBrandSignature(vBrandForScene());
  carRoot.add(extras);
 }
+function vBrandForScene(){return currentVehicle?.brand||activeProfile()?.brand||''}
+function createBrandSignature(brand){
+  if(!carRoot||!extras||!brand)return;
+  const dark=new THREE.MeshPhysicalMaterial({color:0x111315,metalness:.86,roughness:.18,clearcoat:.55});
+  const chrome=new THREE.MeshPhysicalMaterial({color:0xb9bec3,metalness:.95,roughness:.12});
+  const light=new THREE.MeshPhysicalMaterial({color:0xdff7ff,emissive:0x9fd7ff,emissiveIntensity:2.3,metalness:.1,roughness:.12});
+  const amber=new THREE.MeshPhysicalMaterial({color:0xff8b30,emissive:0xff4b10,emissiveIntensity:1.6,roughness:.2});
+  const frontZ=2.48, rearZ=-2.38;
+  if(/BMW/i.test(brand)){
+    for(const x of[-.34,.34]){const g=new THREE.Mesh(new THREE.BoxGeometry(.22,.26,.05),dark);g.position.set(x,.55,frontZ);extras.add(g)}
+    const lamp=new THREE.Mesh(new THREE.BoxGeometry(1.15,.04,.05),light);lamp.position.set(0,.78,frontZ+.02);extras.add(lamp);
+  } else if(/Dodge/i.test(brand)){
+    const bar=new THREE.Mesh(new THREE.BoxGeometry(1.45,.16,.06),dark);bar.position.set(0,.61,frontZ);extras.add(bar);
+    for(const x of[-.62,.62]){const lamp=new THREE.Mesh(new THREE.BoxGeometry(.22,.07,.05),light);lamp.position.set(x,.79,frontZ+.02);extras.add(lamp)}
+  } else if(/Ford|Mustang/i.test(brand)){
+    const grille=new THREE.Mesh(new THREE.BoxGeometry(1.5,.26,.05),dark);grille.position.set(0,.58,frontZ);extras.add(grille);
+    const sig=new THREE.Mesh(new THREE.BoxGeometry(.72,.045,.04),light);sig.position.set(0,.82,frontZ+.02);extras.add(sig);
+  } else if(/Porsche/i.test(brand)){
+    const grille=new THREE.Mesh(new THREE.BoxGeometry(1.55,.10,.06),dark);grille.position.set(0,.58,frontZ);extras.add(grille);
+    for(const x of[-.6,.6]){const lamp=new THREE.Mesh(new THREE.BoxGeometry(.14,.08,.05),light);lamp.position.set(x,.8,frontZ+.03);extras.add(lamp)}
+  } else if(/Mercedes-AMG/i.test(brand)){
+    const grille=new THREE.Mesh(new THREE.BoxGeometry(1.65,.2,.05),dark);grille.position.set(0,.59,frontZ);extras.add(grille);
+    for(let i=-4;i<=4;i++){const slat=new THREE.Mesh(new THREE.BoxGeometry(.025,.14,.035),chrome);slat.position.set(i*.12,.60,frontZ+.03);slat.rotation.y=.12;extras.add(slat)}
+  } else if(/Audi/i.test(brand)){
+    const grille=new THREE.Mesh(new THREE.BoxGeometry(1.45,.28,.05),dark);grille.position.set(0,.58,frontZ);extras.add(grille);
+    const sig=new THREE.Mesh(new THREE.BoxGeometry(1.0,.035,.04),light);sig.position.set(0,.80,frontZ+.03);extras.add(sig);
+  } else if(/Toyota|Lexus|Honda|Subaru/i.test(brand)){
+    const grille=new THREE.Mesh(new THREE.BoxGeometry(1.3,.22,.05),dark);grille.position.set(0,.59,frontZ);extras.add(grille);
+    for(const x of[-.54,.54]){const lamp=new THREE.Mesh(new THREE.BoxGeometry(.20,.07,.05),light);lamp.position.set(x,.8,frontZ+.03);extras.add(lamp)}
+  } else if(/Chevrolet|Corvette/i.test(brand)){
+    const intake=new THREE.Mesh(new THREE.BoxGeometry(1.72,.25,.05),dark);intake.position.set(0,.53,frontZ);extras.add(intake);
+    const sig=new THREE.Mesh(new THREE.BoxGeometry(.82,.04,.04),light);sig.position.set(0,.8,frontZ+.03);extras.add(sig);
+  } else if(/Nissan/i.test(brand)){
+    const intake=new THREE.Mesh(new THREE.BoxGeometry(1.60,.22,.05),dark);intake.position.set(0,.57,frontZ);extras.add(intake);
+    const sig=new THREE.Mesh(new THREE.BoxGeometry(.90,.04,.04),light);sig.position.set(0,.79,frontZ+.03);extras.add(sig);
+  } else if(/Lamborghini|Ferrari|McLaren|Aston Martin/i.test(brand)){
+    const intake=new THREE.Mesh(new THREE.BoxGeometry(1.75,.20,.06),dark);intake.position.set(0,.49,frontZ);extras.add(intake);
+    const sig=new THREE.Mesh(new THREE.BoxGeometry(.62,.035,.04),light);sig.position.set(0,.76,frontZ+.03);extras.add(sig);
+    const rear=new THREE.Mesh(new THREE.BoxGeometry(1.45,.045,.045),amber);rear.position.set(0,.88,rearZ-.02);extras.add(rear);
+  }
+} 
 function applyDetails(){if(!carRoot)return;carRoot.traverse(o=>{if(!o.isMesh)return;const nm=(o.name||'').toLowerCase();if(/head|headlamp|headlight|tail|rear.?light|lamp/.test(nm)){o.visible=state.lights}})}
 function playClip(re){if(!mixer||!carRoot)return;const clip=carRoot.animations?.find(a=>re.test(a.name));if(clip){mixer.stopAllAction();const act=mixer.clipAction(clip);act.reset().setLoop(THREE.LoopOnce,1);act.clampWhenFinished=true;act.play()}else toast('This model does not expose that animation')}
 
