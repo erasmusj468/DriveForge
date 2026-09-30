@@ -18,7 +18,7 @@ const state={
  mode:'customize',vehicle:'coupe',paint:'crimson',wheel:'split5',body:'sport',interior:'black',engine:'v6',drivetrain:'rwd',transmission:'dct',brakes:'bigsteel',aero:'active',ride:0,track:0,width:0,length:0,front:0,rear:0,lights:true,exhaust:true,pro:false,name:'Aster GT'
 };
 
-fetch('data.json').then(r=>r.json()).then(d=>{catalog=d;boot()}).catch(()=>{$('#loadStatus').textContent='Catalog failed to load.'});
+fetch('data.json').then(r=>{if(!r.ok)throw new Error('catalog fetch failed');return r.json()}).then(d=>{catalog=d;boot()}).catch(()=>{catalog=window.DF_CATALOG;if(catalog){boot()}else{$('#loadStatus').textContent='Catalog failed to load.'}});
 
 function boot(){
   setupLanding();
