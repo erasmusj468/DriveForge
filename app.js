@@ -258,6 +258,9 @@ async function loadVehicle(){
     nextRoot.traverse(o=>{
       if(!o.isMesh)return;
       o.castShadow=true;o.receiveShadow=true;
+      // Clone geometry before per-model deformation so cached GLBs never share
+      // mutated buffers with another selected vehicle.
+      if(o.geometry) o.geometry=o.geometry.clone();
       if(o.material){
         const mats=Array.isArray(o.material)?o.material:[o.material];
         mats.forEach(m=>{
@@ -267,6 +270,9 @@ async function loadVehicle(){
       }
     });
 
+    // Give every real-world reference profile its own visual silhouette instead
+    // of rendering the same category mesh unchanged.
+    deformSelectedVehicle(nextRoot);
     scene.add(nextRoot);
     if(previousRoot)scene.remove(previousRoot);
     mixer=gltf.animations?.length?new THREE.AnimationMixer(nextRoot):null;
@@ -300,30 +306,56 @@ function modelVisualTune(){
   const id=currentVehicle?.id||state.vehicle||'';
   const tune={x:1,y:1,z:1,roof:0,stance:0,wheel:1};
   const map={
-    'bmw-m3-xdrive':{x:1.05,y:.99,z:1.02,roof:-.02,stance:-.01,wheel:1.03},
-    'bmw-m4':{x:1.03,y:.97,z:1.04,roof:-.05,stance:-.015,wheel:1.04},
-    'bmw-m5':{x:1.06,y:1.01,z:1.08,roof:.01,stance:0,wheel:1.05},
-    'bmw-x5-m':{x:1.08,y:1.12,z:1.02,roof:.04,stance:.03,wheel:1.06},
-    'dodge-charger-scat':{x:1.10,y:1.00,z:1.10,roof:-.01,stance:.01,wheel:1.08},
-    'dodge-daytona':{x:1.08,y:.98,z:1.10,roof:-.03,stance:-.005,wheel:1.09},
-    'ford-mustang-gt':{x:1.06,y:.98,z:1.07,roof:-.04,stance:-.01,wheel:1.06},
-    'toyota-supra-30':{x:.98,y:.96,z:1.00,roof:-.06,stance:-.02,wheel:1.03},
-    'porsche-911-carrera':{x:.94,y:.96,z:.98,roof:-.09,stance:-.02,wheel:1.02},
-    'porsche-911-turbo-s':{x:.96,y:.98,z:1.01,roof:-.08,stance:-.025,wheel:1.08},
-    'corvette-stingray':{x:.95,y:.94,z:1.07,roof:-.10,stance:-.025,wheel:1.08},
-    'corvette-zr1x':{x:.98,y:.95,z:1.10,roof:-.11,stance:-.035,wheel:1.12},
-    'nissan-gtr':{x:1.02,y:1.00,z:1.05,roof:-.04,stance:-.015,wheel:1.06},
-    'honda-type-r':{x:1.01,y:1.04,z:1.00,roof:.03,stance:.005,wheel:1.01},
-    'subaru-wrx':{x:1.02,y:1.00,z:1.03,roof:0,stance:-.005,wheel:1.04},
-    'mercedes-amg-gt':{x:1.04,y:.98,z:1.06,roof:-.05,stance:-.01,wheel:1.07},
-    'audi-rs6':{x:1.04,y:1.02,z:1.08,roof:.01,stance:.005,wheel:1.05},
-    'lexus-lc500':{x:1.02,y:.99,z:1.04,roof:-.05,stance:-.005,wheel:1.06},
-    'mclaren-artura':{x:.92,y:.91,z:1.02,roof:-.12,stance:-.035,wheel:1.09},
-    'aston-vantage':{x:.98,y:.95,z:1.07,roof:-.07,stance:-.02,wheel:1.08},
-    'lamborghini-revuelto':{x:.90,y:.91,z:1.08,roof:-.13,stance:-.04,wheel:1.12},
-    'ferrari-296':{x:.91,y:.90,z:1.05,roof:-.12,stance:-.035,wheel:1.10}
+    'bmw-m3-xdrive':{x:1.08,y:1.00,z:1.05,roof:-.03,stance:-.02,wheel:1.05,hood:.98,front:.98,rear:1.01},
+    'bmw-m4-xdrive':{x:1.06,y:.96,z:1.08,roof:-.07,stance:-.025,wheel:1.07,hood:.97,front:.98,rear:1.03},
+    'bmw-m5':{x:1.10,y:1.01,z:1.10,roof:-.01,stance:-.015,wheel:1.07,hood:1.01,front:1.02,rear:1.04},
+    'bmw-i5-m60':{x:1.08,y:1.00,z:1.08,roof:0,stance:-.01,wheel:1.06,hood:1.02,front:1.01,rear:1.03},
+    'bmw-x5m':{x:1.16,y:1.14,z:1.08,roof:.08,stance:.035,wheel:1.12,hood:1.02,front:1.05,rear:1.04},
+    'dodge-charger-rt':{x:1.18,y:1.00,z:1.22,roof:.00,stance:.02,wheel:1.10,hood:1.10,front:1.07,rear:1.07},
+    'dodge-charger-scat':{x:1.21,y:.99,z:1.27,roof:-.02,stance:.01,wheel:1.14,hood:1.12,front:1.09,rear:1.11},
+    'dodge-daytona':{x:1.20,y:.97,z:1.25,roof:-.05,stance:.00,wheel:1.15,hood:1.10,front:1.08,rear:1.14},
+    'ford-mustang-gt':{x:1.10,y:.97,z:1.16,roof:-.07,stance:-.015,wheel:1.10,hood:1.07,front:1.03,rear:1.08},
+    'toyota-supra-30':{x:1.00,y:.93,z:1.02,roof:-.10,stance:-.03,wheel:1.07,hood:1.02,front:1.00,rear:1.09},
+    'porsche-911-carrera':{x:.95,y:.93,z:.98,roof:-.14,stance:-.035,wheel:1.06,hood:.95,front:.94,rear:1.06},
+    'porsche-911-turbo-s':{x:.98,y:.95,z:1.02,roof:-.13,stance:-.04,wheel:1.12,hood:.97,front:.96,rear:1.10},
+    'corvette-stingray':{x:.99,y:.91,z:1.13,roof:-.15,stance:-.045,wheel:1.13,hood:1.01,front:1.02,rear:1.13},
+    'corvette-zr1x':{x:1.03,y:.92,z:1.17,roof:-.16,stance:-.05,wheel:1.18,hood:1.04,front:1.05,rear:1.17},
+    'nissan-gtr':{x:1.06,y:.97,z:1.11,roof:-.07,stance:-.025,wheel:1.10,hood:1.05,front:1.02,rear:1.08},
+    'honda-type-r':{x:1.04,y:1.03,z:1.01,roof:.02,stance:-.005,wheel:1.04,hood:.99,front:1.01,rear:1.06},
+    'subaru-wrx':{x:1.05,y:1.00,z:1.08,roof:.00,stance:-.015,wheel:1.07,hood:1.03,front:1.02,rear:1.05},
+    'mercedes-amg-gt':{x:1.08,y:.95,z:1.14,roof:-.09,stance:-.03,wheel:1.12,hood:1.04,front:1.02,rear:1.10},
+    'audi-rs6':{x:1.10,y:1.03,z:1.15,roof:.01,stance:-.005,wheel:1.09,hood:1.02,front:1.03,rear:1.07},
+    'lexus-lc500':{x:1.05,y:.96,z:1.10,roof:-.09,stance:-.015,wheel:1.09,hood:1.04,front:1.03,rear:1.08},
+    'mclaren-artura':{x:.92,y:.86,z:1.05,roof:-.19,stance:-.055,wheel:1.15,hood:.93,front:.94,rear:1.14},
+    'aston-vantage':{x:1.02,y:.91,z:1.12,roof:-.11,stance:-.035,wheel:1.12,hood:1.00,front:1.02,rear:1.10},
+    'lamborghini-revuelto':{x:.88,y:.86,z:1.15,roof:-.20,stance:-.06,wheel:1.20,hood:.90,front:1.06,rear:1.18},
+    'ferrari-296':{x:.90,y:.85,z:1.10,roof:-.18,stance:-.05,wheel:1.18,hood:.92,front:1.00,rear:1.16}
   };
   return map[id]||tune;
+}
+
+function deformSelectedVehicle(root){
+  if(!root)return;
+  const tune=modelVisualTune();
+  root.updateMatrixWorld(true);
+  const bounds=new THREE.Box3().setFromObject(root);
+  const center=bounds.getCenter(new THREE.Vector3());
+  const length=Math.max(bounds.max.z-bounds.min.z,0.01);
+  const excluded=/wheel|tire|tyre|rim|brake|disc|caliper|steering|seat|interior|dashboard|glass|window/i;
+  root.traverse(o=>{
+    if(!o.isMesh || !o.geometry || excluded.test(o.name||''))return;
+    const wp=o.getWorldPosition(new THREE.Vector3());
+    const rz=(wp.z-center.z)/length+.5;
+    const frontBias=Math.max(0,rz-.55)/.45;
+    const rearBias=Math.max(0,.45-rz)/.45;
+    const sideFactor=1+(tune.x-1)*(0.75+0.25*Math.abs(rz-.5)*2);
+    o.scale.x*=sideFactor;
+    o.scale.y*=tune.y;
+    o.scale.z*=((tune.z-1)+1)*(1+0.14*frontBias*(tune.front||1-1)+0.14*rearBias*(tune.rear||1-1));
+    if(o.position.y>center.y) o.position.y += (tune.roof||0)*.35;
+    if(frontBias) o.position.z += (tune.hood||1-1)*0.08*length*frontBias;
+    if(rearBias) o.position.z -= (tune.rear||1-1)*0.06*length*rearBias;
+  });
 }
 function applyVehicleTransforms(){
   if(!carRoot)return;
