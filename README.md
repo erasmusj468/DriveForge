@@ -1,13 +1,5 @@
 # DriveForge Vehicle Studio
 
-This build fixes the broken vehicle images on deployments where the `/assets` folder was not uploaded.
+DriveForge presents each catalog vehicle with an interactive, externally hosted 3D model. Select a car to load its model, then drag or scroll in the viewer to inspect it. The catalog itself uses vehicle specifications rather than stock photos.
 
-## Important
-The car photos are embedded directly into `app.js`, so the garage cards and main viewer work even when only the root files are uploaded to Vercel.
-
-The `assets/` JPEGs are also included as source assets for future edits.
-
-## Deploy
-Replace the existing DriveForge files with the contents of this folder in the `erasmusj468/DriveForge` repository. Vercel can then redeploy the same project.
-
-No extra asset server or image path configuration is required for the current image system.
+The 3D meshes are embedded from Sketchfab and linked to their creators in the viewer. The listed meshes use Creative Commons Attribution licensing. Loading the viewer requires an internet connection and access to Sketchfab. Build options are saved as a specification and estimate; they do not modify the externally hosted source meshes.
