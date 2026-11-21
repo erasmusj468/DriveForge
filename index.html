@@ -6,7 +6,6 @@
 <meta name="theme-color" content="#080a0d">
 <title>DriveForge — Vehicle Studio</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23080a0d'/%3E%3Cpath d='M12 38 24 12h11l-7 16h22l-11 24H28l7-14H12Z' fill='%23e92b2b'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -45,13 +44,14 @@
     <div class="panel-tabs" id="panelTabs"><button class="active" data-tab="vehicle">Vehicle</button><button data-tab="paint">Paint</button><button data-tab="wheels">Wheels</button><button data-tab="body">Body</button><button data-tab="power">Power</button><button data-tab="interior">Interior</button></div>
     <div class="panel-body" id="panelBody"></div>
     <div class="statbar"><div class="stat"><strong id="statHp">523</strong><span>HP</span></div><div class="stat"><strong id="statZero">3.4</strong><span>0–100</span></div><div class="stat"><strong id="statTop">290</strong><span>KM/H</span></div></div>
-    <div class="buildbar"><div><small>BUILD PRICE</small><strong id="buildPrice">$88,600</strong></div><button class="primary" id="saveBuildBtn">SAVE BUILD</button></div>
+    <div class="buildbar"><div><small>BUILD PRICE</small><strong id="buildPrice">$88,600</strong></div><div class="build-actions"><button class="ghost" id="downloadBuildBtn" title="Download build as JSON">EXPORT</button><button class="primary" id="saveBuildBtn">SAVE BUILD</button></div></div>
   </aside>
 </section>
 
 <div id="modeScreen" class="mode-screen hidden"><div class="mode-wrap"><div class="eyebrow">DRIVEFORGE · VEHICLE STUDIO</div><h1>HOW DO YOU<br><span>WANT TO BUILD?</span></h1><div class="mode-cards"><button class="mode-card" data-start-mode="customize"><span class="n">01</span><h2>Customize an existing car</h2><p>Pick from BMW, Dodge, Ford, Toyota, Porsche, Chevrolet, Nissan, Mercedes-AMG, Audi and more.</p><span class="arrow">→</span></button><button class="mode-card" data-start-mode="scratch"><span class="n">02</span><h2>Build from scratch</h2><p>Start with the architecture, proportions, powertrain and attitude — then create your own machine.</p><span class="arrow">→</span></button></div><div class="tiny">REAL-WORLD INSPIRED · LIVE BUILD LOGIC · DEMO PREMIUM SYSTEM</div></div></div>
 
 <div id="premiumModal" class="modal hidden"><div class="modal-card"><button class="modal-close" id="closePremium">×</button><div class="eyebrow">DRIVEFORGE PREMIUM</div><h3>Unlock Pro Garage</h3><p>Unlock V10 and V12 engines, exclusive body programs, forged wheels, carbon interiors, race aero and special finishes.</p><div class="modal-price"><span>ONE-TIME DEMO UPGRADE</span><strong>$20</strong></div><button class="primary" id="unlockPremium" style="width:100%">UNLOCK PREMIUM</button><div class="tiny">Demo only. No real payment is processed.</div></div></div>
+<div id="savedModal" class="modal hidden"><div class="modal-card saved-card"><button class="modal-close" id="closeSaved">×</button><div class="eyebrow">YOUR GARAGE</div><h3>Saved builds</h3><div id="savedList"></div></div></div>
 <div id="toast" class="hidden" style="position:fixed;left:50%;bottom:25px;transform:translateX(-50%);background:#141a20;border:1px solid #343e48;border-radius:10px;padding:12px 16px;z-index:80;font-size:11px;box-shadow:0 18px 45px rgba(0,0,0,.35)"></div>
 </div>
 <script src="app.js"></script>
