@@ -7,6 +7,7 @@
 <title>DriveForge — Vehicle Studio</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23080a0d'/%3E%3Cpath d='M12 38 24 12h11l-7 16h22l-11 24H28l7-14H12Z' fill='%23e92b2b'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="viewer.css">
 </head>
 <body>
 <div class="app">
@@ -36,11 +37,12 @@
 <section id="studioView" class="studio hidden">
   <div class="viewer">
     <div class="viewer-bg"></div><div class="viewer-grid"></div>
-    <div class="viewer-car" id="viewerCar" aria-label="Selected vehicle preview"></div>
-    <div class="viewer-footer"><div class="viewer-title"><b id="viewerName">BMW M3 Competition xDrive</b><span id="viewerMeta">2026 · Sedan · AWD</span></div><div class="camera-row"><button class="active" data-view="front">Front</button><button data-view="rear">Rear</button><button data-view="side">Side</button><button data-view="interior">Interior</button></div></div>
+    <div class="viewer-car" id="viewerCar"><iframe id="vehicleModel" title="Interactive 3D vehicle model" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+    <div class="viewer-hint">INTERACTIVE 3D MODEL · DRAG TO ORBIT · SCROLL TO ZOOM</div>
+    <div class="viewer-footer"><div class="viewer-title"><b id="viewerName">BMW M3 Competition xDrive</b><span id="viewerMeta">2026 · Sedan · AWD</span><div class="model-attribution"><a id="modelCredit" class="model-credit" target="_blank" rel="noopener noreferrer"></a><a id="modelLicense" target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div><div class="camera-row"><span>3D MODEL</span></div></div>
   </div>
   <aside class="panel">
-    <div class="panel-head"><small>YOUR BUILD</small><h2 id="buildTitle">BMW M3 Competition xDrive</h2><p id="buildSubtitle">Performance sedan · Reference visualization</p></div>
+    <div class="panel-head"><small>YOUR BUILD</small><h2 id="buildTitle">BMW M3 Competition xDrive</h2><p id="buildSubtitle">Performance sedan · Real 3D model</p></div>
     <div class="panel-tabs" id="panelTabs"><button class="active" data-tab="vehicle">Vehicle</button><button data-tab="paint">Paint</button><button data-tab="wheels">Wheels</button><button data-tab="body">Body</button><button data-tab="power">Power</button><button data-tab="interior">Interior</button></div>
     <div class="panel-body" id="panelBody"></div>
     <div class="statbar"><div class="stat"><strong id="statHp">523</strong><span>HP</span></div><div class="stat"><strong id="statZero">3.4</strong><span>0–100</span></div><div class="stat"><strong id="statTop">290</strong><span>KM/H</span></div></div>
